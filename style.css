@@ -700,10 +700,10 @@ td:nth-child(5) {
   margin-bottom: 24px;
 }
 
-/* Widget Stat Grid (Tengah) */
+/* Widget Stat Grid (3 Kolom Sejajar) */
 .siswa-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   margin-bottom: 28px;
 }
