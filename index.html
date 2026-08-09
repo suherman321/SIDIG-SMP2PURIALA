@@ -234,9 +234,10 @@
     <!-- 1. SIDEBAR KIRI -->
     <aside class="siswa-sidebar">
       <div class="siswa-profile-card">
-        <!-- Avatar Default -->
-        <div class="siswa-avatar-default">
-          <i class="fa-solid fa-user-graduate"></i>
+        <!-- Avatar Foto & Icon Default -->
+        <div class="siswa-avatar-default" style="overflow: hidden; width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; background: #cbd5e1;">
+          <img id="sidebar-siswa-foto" src="" alt="Foto Siswa" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+          <i id="sidebar-siswa-icon" class="fa-solid fa-user-graduate" style="font-size: 36px; color: #475569;"></i>
         </div>
         <div style="font-weight: 700; font-size: 16px; color: #1e293b;" id="sidebar-siswa-nama">-</div>
         <div style="font-size: 13px; color: #64748b; margin-top: 2px;" id="sidebar-siswa-kelas">Siswa</div>
@@ -818,7 +819,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=9"></script>
+  <script src="app.js?v=10"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {

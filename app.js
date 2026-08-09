@@ -173,6 +173,26 @@ function showAppScreen(user) {
     if (elemWelcome) elemWelcome.innerText = namaTampil;
 	const elemGuruWali = document.getElementById("siswa-guruwali-welcome");
 if (elemGuruWali) elemGuruWali.innerText = (dataSiswa && dataSiswa.guru_wali) ? dataSiswa.guru_wali : "-";
+// Mengisi Profil Siswa di Sidebar Kiri
+const elSidebarNama = document.getElementById("sidebar-siswa-nama");
+if (elSidebarNama) elSidebarNama.innerText = namaTampil;
+
+const elSidebarKelas = document.getElementById("sidebar-siswa-kelas");
+if (elSidebarKelas) elSidebarKelas.innerText = (dataSiswa && dataSiswa.kelas) ? "Kelas " + dataSiswa.kelas : "Siswa";
+// Logika Menampilkan Foto Profil dari Spreadsheet
+const elFoto = document.getElementById("sidebar-siswa-foto");
+const elIcon = document.getElementById("sidebar-siswa-icon");
+
+if (dataSiswa && dataSiswa.foto && dataSiswa.foto.trim() !== "") {
+  if (elFoto) {
+    elFoto.src = dataSiswa.foto;
+    elFoto.style.display = "block";
+  }
+  if (elIcon) elIcon.style.display = "none";
+} else {
+  if (elFoto) elFoto.style.display = "none";
+  if (elIcon) elIcon.style.display = "block";
+}
 
     tutupMenuSiswa();
     tampilkanRiwayatNilai();
