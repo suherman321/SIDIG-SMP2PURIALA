@@ -355,7 +355,8 @@
       <div id="tab-siswa-nilai" class="tab-siswa-content hidden">
         <div style="background: white; padding: 20px; border-radius: 12px;">
           <h2 style="margin-top:0;">Nilai Rapor Siswa</h2>
-          <!-- Pindahkan elemen/tabel nilai rapor Anda ke sini -->
+          <!-- WADAH TABEL NILAI -->
+          <div id="siswa-nilai-container"></div>
         </div>
       </div>
 
@@ -363,7 +364,8 @@
       <div id="tab-siswa-kasus" class="tab-siswa-content hidden">
         <div style="background: white; padding: 20px; border-radius: 12px;">
           <h2 style="margin-top:0;">Buku Kasus / Catatan Disiplin</h2>
-          <!-- Pindahkan elemen/tabel buku kasus Anda ke sini -->
+          <!-- WADAH TABEL KASUS (Harus di dalam div putih) -->
+          <div id="siswa-kasus-container"></div>
         </div>
       </div>
 
@@ -371,7 +373,8 @@
       <div id="tab-siswa-kehadiran" class="tab-siswa-content hidden">
         <div style="background: white; padding: 20px; border-radius: 12px;">
           <h2 style="margin-top:0;">Rekap Kehadiran</h2>
-          <!-- Pindahkan elemen/tabel rekap kehadiran Anda ke sini -->
+          <!-- WADAH TABEL KEHADIRAN -->
+          <div id="siswa-kehadiran-container"></div>
         </div>
       </div>
 
@@ -379,7 +382,8 @@
       <div id="tab-siswa-pbm" class="tab-siswa-content hidden">
         <div style="background: white; padding: 20px; border-radius: 12px;">
           <h2 style="margin-top:0;">Presensi Mata Pelajaran (PBM)</h2>
-          <!-- Pindahkan elemen kartu grid Mapel (Gambar 1 Anda) ke sini -->
+          <!-- WADAH GRID PBM -->
+          <div id="siswa-pbm-container"></div>
         </div>
       </div>
 
@@ -847,7 +851,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=11"></script>
+  <script src="app.js?v=12"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {
