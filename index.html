@@ -351,45 +351,127 @@
         </div>
       </div>
 
-      <!-- TAB 2: NILAI RAPOR -->
+<!-- TAB 2: NILAI RAPOR -->
       <div id="tab-siswa-nilai" class="tab-siswa-content hidden">
-        <div style="background: white; padding: 20px; border-radius: 12px;">
-          <h2 style="margin-top:0;">Nilai Rapor Siswa</h2>
-          <!-- WADAH TABEL NILAI -->
-          <div id="siswa-nilai-container"></div>
+        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+          
+          <!-- LEVEL 1: GRID KARTU MAPEL NILAI -->
+          <div id="container-level-mapel">
+            <h2 style="margin-top:0; color: #1e293b; font-size: 18px; margin-bottom: 16px;">Nilai Rapor Siswa</h2>
+            <div id="grid-kartu-mapel" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
+              <!-- Kartu mata pelajaran akan dirender JS di sini -->
+            </div>
+          </div>
+
+          <!-- LEVEL 2: RINCIAN NILAI MAPEL -->
+          <div id="container-level-rincian" class="hidden">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <button onclick="kembaliKeDaftarMapel()" style="padding: 6px 12px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;">
+                <i class="fa-solid fa-arrow-left"></i> Kembali
+              </button>
+              <span id="badge-mapel-terpilih" style="background: #eff6ff; color: #2563eb; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 13px;"></span>
+            </div>
+            <h3 id="judul-mapel-terpilih" style="margin-top:0; font-size: 16px; color: #1e293b;">Rincian Nilai</h3>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+              <thead>
+                <tr style="background: #f8fafc; text-align: left; border-bottom: 2px solid #e2e8f0;">
+                  <th style="padding: 10px;">Nama</th>
+                  <th style="padding: 10px;">Mapel</th>
+                  <th style="padding: 10px;">Jenis</th>
+                  <th style="padding: 10px;">Nilai</th>
+                  <th style="padding: 10px;">Status</th>
+                  <th style="padding: 10px; text-align: center;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="tabel-riwayat-siswa-body"></tbody>
+            </table>
+          </div>
+
         </div>
       </div>
 
       <!-- TAB 3: BUKU KASUS -->
       <div id="tab-siswa-kasus" class="tab-siswa-content hidden">
-        <div style="background: white; padding: 20px; border-radius: 12px;">
-          <h2 style="margin-top:0;">Buku Kasus / Catatan Disiplin</h2>
-          <!-- WADAH TABEL KASUS (Harus di dalam div putih) -->
-          <div id="siswa-kasus-container"></div>
+        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+          <h2 style="margin-top:0; color: #1e293b; font-size: 18px; margin-bottom: 16px;">Buku Kasus / Catatan Disiplin</h2>
+          <div id="loading-kasus" style="display: none; text-align: center; color: #64748b;">Memuat...</div>
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="background: #f8fafc; text-align: left; border-bottom: 2px solid #e2e8f0;">
+                <th style="padding: 10px;">Waktu</th>
+                <th style="padding: 10px;">Pelanggaran / Kasus</th>
+                <th style="padding: 10px;">Tindak Lanjut</th>
+                <th style="padding: 10px;">Guru Piket</th>
+              </tr>
+            </thead>
+            <tbody id="tabel-kasus-body"></tbody>
+          </table>
         </div>
       </div>
 
       <!-- TAB 4: KEHADIRAN -->
       <div id="tab-siswa-kehadiran" class="tab-siswa-content hidden">
-        <div style="background: white; padding: 20px; border-radius: 12px;">
-          <h2 style="margin-top:0;">Rekap Kehadiran</h2>
-          <!-- WADAH TABEL KEHADIRAN -->
-          <div id="siswa-kehadiran-container"></div>
+        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+          
+          <!-- LEVEL 1: GRID MAPEL KEHADIRAN -->
+          <div id="container-kehadiran-level-mapel">
+            <h2 style="margin-top:0; color: #1e293b; font-size: 18px; margin-bottom: 16px;">Rekap Kehadiran Per Mata Pelajaran</h2>
+            <div id="grid-kartu-kehadiran-mapel" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
+              <!-- Kartu kehadiran dirender JS di sini -->
+            </div>
+          </div>
+
+          <!-- LEVEL 2: RINCIAN KEHADIRAN -->
+          <div id="container-kehadiran-level-rincian" class="hidden">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <button onclick="kembaliKeDaftarMapelKehadiran()" style="padding: 6px 12px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;">
+                <i class="fa-solid fa-arrow-left"></i> Kembali
+              </button>
+              <span id="badge-mapel-kehadiran-terpilih" style="background: #f0fdf4; color: #16a34a; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 13px;"></span>
+            </div>
+            <h3 id="judul-mapel-kehadiran-terpilih" style="margin-top:0; font-size: 16px; color: #1e293b;">Rincian Kehadiran</h3>
+            
+            <!-- RINGKASAN STATISTIK -->
+            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+              <span style="background:#f0fdf4; color:#16a34a; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Hadir: <span id="stat-hadir">0</span></span>
+              <span style="background:#eff6ff; color:#2563eb; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Izin: <span id="stat-izin">0</span></span>
+              <span style="background:#fefce8; color:#ca8a04; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Sakit: <span id="stat-sakit">0</span></span>
+              <span style="background:#fef2f2; color:#dc2626; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Alpa: <span id="stat-alpa">0</span></span>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f8fafc; text-align: left; border-bottom: 2px solid #e2e8f0;">
+                  <th style="padding: 10px;">Tanggal</th>
+                  <th style="padding: 10px;">Waktu</th>
+                  <th style="padding: 10px;">Keterangan</th>
+                </tr>
+              </thead>
+              <tbody id="tabel-kehadiran-body"></tbody>
+            </table>
+          </div>
+
         </div>
       </div>
 
-      <!-- TAB 5: PBM / PRESENSI MAPEL -->
+      <!-- TAB 5: PBM -->
       <div id="tab-siswa-pbm" class="tab-siswa-content hidden">
-        <div style="background: white; padding: 20px; border-radius: 12px;">
-          <h2 style="margin-top:0;">Presensi Mata Pelajaran (PBM)</h2>
-          <!-- WADAH GRID PBM -->
-          <div id="siswa-pbm-container"></div>
+        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+          <h2 style="margin-top:0; color: #1e293b; font-size: 18px; margin-bottom: 16px;">Presensi Mata Pelajaran (PBM)</h2>
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="background: #f8fafc; text-align: left; border-bottom: 2px solid #e2e8f0;">
+                <th style="padding: 10px;">Tanggal</th>
+                <th style="padding: 10px;">Mata Pelajaran</th>
+                <th style="padding: 10px;">Guru</th>
+                <th style="padding: 10px;">Permasalahan</th>
+                <th style="padding: 10px;">Penyelesaian</th>
+              </tr>
+            </thead>
+            <tbody id="tbl-siswa-pbm-body"></tbody>
+          </table>
         </div>
       </div>
-
-    </main>
-  </div>
-</div>
 
 
 <!-- B. DASHBOARD GURU -->
@@ -851,7 +933,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=12"></script>
+  <script src="app.js?v=13"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {
