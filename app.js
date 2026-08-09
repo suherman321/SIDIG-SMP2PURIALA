@@ -862,43 +862,54 @@ async function syncData(isAuto = false) {
 // 9. LOGIKA NAVIGASI SISWA & FETCH BUKU KASUS
 // ==========================================
 function switchSiswaTab(tabName) {
+  // 1. Pastikan dashboard utama selalu tampil
   const dashboard = document.getElementById("siswa-dashboard");
-  if (dashboard) dashboard.classList.add("hidden");
+  if (dashboard) dashboard.classList.remove("hidden");
 
-  const tabNilai = document.getElementById("view-tab-nilai");
-  const tabKasus = document.getElementById("view-tab-kasus");
-  const tabKehadiran = document.getElementById("view-tab-kehadiran");
-  const tabPbm = document.getElementById("view-tab-pbm");
+  // 2. Ambil semua elemen tab berdasarkan ID baru di HTML Anda
+  const tabBeranda = document.getElementById("tab-siswa-beranda");
+  const tabNilai = document.getElementById("tab-siswa-nilai");
+  const tabKasus = document.getElementById("tab-siswa-kasus");
+  const tabKehadiran = document.getElementById("tab-siswa-kehadiran");
+  const tabPbm = document.getElementById("tab-siswa-pbm");
 
-  if (tabPbm) tabPbm.classList.add("hidden");
+  // 3. Sembunyikan semua tab terlebih dahulu
+  if (tabBeranda) tabBeranda.classList.add("hidden");
   if (tabNilai) tabNilai.classList.add("hidden");
   if (tabKasus) tabKasus.classList.add("hidden");
   if (tabKehadiran) tabKehadiran.classList.add("hidden");
+  if (tabPbm) tabPbm.classList.add("hidden");
 
+  // 4. Sembunyikan tombol 'Kembali' jika ada (karena sudah pakai sidebar)
   const btnBackNilai = document.getElementById("btn-back-siswa-nilai");
   const btnBackKasus = document.getElementById("btn-back-siswa-kasus");
   const btnBackKehadiran = document.getElementById("btn-back-siswa-kehadiran");
-  if (btnBackNilai) btnBackNilai.classList.remove("hidden");
-  if (btnBackKasus) btnBackKasus.classList.remove("hidden");
-  if (btnBackKehadiran) btnBackKehadiran.classList.remove("hidden");
+  if (btnBackNilai) btnBackNilai.classList.add("hidden");
+  if (btnBackKasus) btnBackKasus.classList.add("hidden");
+  if (btnBackKehadiran) btnBackKehadiran.classList.add("hidden");
 
-  if (tabName === 'nilai') {
+  // 5. Tampilkan tab yang diklik & jalankan fungsi muat datanya
+  if (tabName === 'beranda') {
+    if (tabBeranda) tabBeranda.classList.remove("hidden");
+  } else if (tabName === 'nilai') {
     if (tabNilai) tabNilai.classList.remove("hidden");
-    muatHalamanNilaiSiswa();
+    if (typeof muatHalamanNilaiSiswa === "function") muatHalamanNilaiSiswa();
   } else if (tabName === 'kasus') {
     if (tabKasus) tabKasus.classList.remove("hidden");
-    if (typeof loadBukuKasusSiswa === "function") {
-      loadBukuKasusSiswa();
-    }
+    if (typeof loadBukuKasusSiswa === "function") loadBukuKasusSiswa();
   } else if (tabName === 'kehadiran') {
     if (tabKehadiran) tabKehadiran.classList.remove("hidden");
-    if (typeof loadKehadiranSiswa === "function") {
-      loadKehadiranSiswa();
-    }
+    if (typeof loadKehadiranSiswa === "function") loadKehadiranSiswa();
   } else if (tabName === 'pbm') {
     if (tabPbm) tabPbm.classList.remove("hidden");
-    loadSiswaPBMData();
+    if (typeof loadSiswaPBMData === "function") loadSiswaPBMData();
   }
+
+  // 6. Update highlight tombol aktif di sidebar kiri
+  const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+  navItems.forEach(item => item.classList.remove('active'));
+  const activeBtn = document.querySelector(`.sidebar-nav .nav-item[onclick*="'${tabName}'"]`);
+  if (activeBtn) activeBtn.classList.add('active');
 }
 
 function tutupMenuSiswa() {
