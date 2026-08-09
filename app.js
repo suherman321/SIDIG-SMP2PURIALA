@@ -910,6 +910,19 @@ function switchSiswaTab(tabName) {
   navItems.forEach(item => item.classList.remove('active'));
   const activeBtn = document.querySelector(`.sidebar-nav .nav-item[onclick*="'${tabName}'"]`);
   if (activeBtn) activeBtn.classList.add('active');
+  // Tutup sidebar otomatis di HP setelah menu diklik
+if (window.innerWidth <= 768) {
+    const sidebar = document.querySelector('.siswa-sidebar');
+    if (sidebar) sidebar.classList.add('collapsed');
+  }
+}
+
+// Fungsi Toggle Sidebar untuk Tombol Garis 3
+function toggleSidebarSiswa() {
+  const sidebar = document.querySelector('.siswa-sidebar');
+  if (sidebar) {
+    sidebar.classList.toggle('collapsed');
+  }
 }
 
 function tutupMenuSiswa() {
@@ -2290,4 +2303,11 @@ function simpanEditUser(event) {
   .catch(err => {
     alert('Gagal memperbarui user: ' + err.message);
   });
+}
+// Fungsi untuk Buka / Tutup Sidebar di HP
+function toggleSidebarSiswa() {
+  const sidebar = document.querySelector('.siswa-sidebar');
+  if (sidebar) {
+    sidebar.classList.toggle('collapsed');
+  }
 }

@@ -736,3 +736,34 @@ td:nth-child(5) {
   transform: translateY(-4px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
+/* Media query khusus untuk tampilan HP (layar kecil) */
+@media (max-width: 768px) {
+  .siswa-dashboard-container {
+    display: block !important;
+    position: relative;
+  }
+
+  /* Sidebar dibuat melayang overlay di atas konten utama */
+  .siswa-sidebar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 9999;
+    background: #ffffff;
+    box-shadow: 4px 0 15px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+    width: 250px !important;
+  }
+
+  /* Sembunyikan sidebar ke luar layar kiri saat status 'collapsed' */
+  .siswa-sidebar.collapsed {
+    transform: translateX(-100%);
+  }
+
+  /* Konten utama memenuhi seluruh lebar layar */
+  .siswa-content {
+    width: 100% !important;
+    padding: 10px !important;
+  }
+}
