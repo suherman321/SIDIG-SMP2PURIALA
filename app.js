@@ -171,6 +171,8 @@ function showAppScreen(user) {
     
     const elemWelcome = document.getElementById("siswa-nama-welcome");
     if (elemWelcome) elemWelcome.innerText = namaTampil;
+	const elemGuruWali = document.getElementById("siswa-guruwali-welcome");
+if (elemGuruWali) elemGuruWali.innerText = userActive.guru_wali || "-";
 
     tutupMenuSiswa();
     tampilkanRiwayatNilai();
