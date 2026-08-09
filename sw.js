@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-nilai-v11'; // <-- [BARIS 1] Setiap ada update, naikkan versinya (misal v2 jadi v3)
+const CACHE_NAME = 'pwa-nilai-v12'; // Naikkan versi cache
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -28,14 +28,16 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
-// <-- [BARIS 30 UTAMA YANG DIUBAH]
-// Mengubah strategi menjadi Network-First (Coba ambil versi terbaru dari server dulu)
 self.addEventListener('fetch', (e) => {
+  // Abaikan jika bukan GET (Request POST/API tidak akan menyebabkan crash lagi)
+  if (e.request.method !== 'GET') {
+    return;
+  }
+
   e.respondWith(
     fetch(e.request)
       .then((networkResponse) => {
-        // Jika ada koneksi internet, update isi cache dengan file terbaru
-        if (networkResponse && networkResponse.status === 200) {
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
           const responseClone = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(e.request, responseClone);
@@ -44,7 +46,6 @@ self.addEventListener('fetch', (e) => {
         return networkResponse;
       })
       .catch(() => {
-        // Jika offline / tidak ada koneksi, baru ambil dari cache
         return caches.match(e.request);
       })
   );
