@@ -2318,24 +2318,35 @@ function updateRangkumanKehadiranSiswa(dataPresensiSiswa) {
   const elemKehadiran = document.getElementById('stat-kehadiran-persen');
   if (!elemKehadiran) return;
 
-  // Jika belum ada data presensi terinput
   if (!dataPresensiSiswa || dataPresensiSiswa.length === 0) {
     elemKehadiran.innerText = '0%';
     return;
   }
 
-  // Total semua sesi/mapel yang sudah diisi absen oleh guru
-  const totalPertemuan = dataPresensiSiswa.length;
+  let totalPertemuan = 0;
+  let totalHadir = 0;
 
-  // Hitung berapa kali siswa berstatus 'Hadir' atau 'H'
-  const totalHadir = dataPresensiSiswa.filter(item => {
-    const status = (item.status || '').toString().trim().toLowerCase();
-    return status === 'hadir' || status === 'h';
-  }).length;
+  dataPresensiSiswa.forEach(item => {
+    // Jika data berupa rincian array per mata pelajaran
+    if (Array.isArray(item.rincian)) {
+      item.rincian.forEach(r => {
+        totalPertemuan++;
+        const st = (r.status || r.keterangan || r.presensi || '').toString().trim().toLowerCase();
+        if (st === 'hadir' || st === 'h') totalHadir++;
+      });
+    } else {
+      // Jika data langsung berupa item tunggal
+      totalPertemuan++;
+      const st = (item.status || item.status_kehadiran || item.keterangan || item.presensi || '').toString().trim().toLowerCase();
+      if (st === 'hadir' || st === 'h') totalHadir++;
+    }
+  });
 
-  // Hitung persentase (Murni Hadir / Total Pertemuan * 100)
+  if (totalPertemuan === 0) {
+    elemKehadiran.innerText = '0%';
+    return;
+  }
+
   const persentase = Math.round((totalHadir / totalPertemuan) * 100);
-
-  // Tampilkan ke UI
   elemKehadiran.innerText = `${persentase}%`;
 }

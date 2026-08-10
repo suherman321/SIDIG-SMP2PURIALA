@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-nilai-v18'; // Naikkan versi cache
+const CACHE_NAME = 'pwa-nilai-v19'; // Naikkan versi cache
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
