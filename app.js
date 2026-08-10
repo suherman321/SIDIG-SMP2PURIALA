@@ -159,7 +159,10 @@ function showAppScreen(user) {
 
   if (role === "SISWA") {
     if (dashboardSiswa) dashboardSiswa.classList.remove("hidden");
-
+// Load data kehadiran di awal agar % langsung muncul di Beranda
+  if (typeof loadKehadiranSiswa === "function") {
+    loadKehadiranSiswa();
+  }
     const dataSiswa = masterSiswaGlobal.find(s => 
       String(s.ref_id) === String(user.ref_id) || 
       String(s.nisn) === String(user.username) || 
