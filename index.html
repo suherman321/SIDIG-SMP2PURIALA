@@ -492,6 +492,15 @@
 <!-- B. DASHBOARD GURU -->
 <div id="guru-dashboard" class="hidden dashboard-guru-container">
 
+  <!-- 1. HEADER BAR GURU (Baris Email + Status + Logout) -->
+  <div class="guru-header-bar" style="background: #ffffff; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+    <span id="guru-email-display" style="font-weight: 600; color: #334155;">suherman126@guru.smp.belajar.id</span>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span class="badge-online" style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;">● Online</span>
+      <button onclick="logout()" style="background: #64748b; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600;">Logout</button>
+    </div>
+  </div>
+
   <!-- WELCOME CARD -->
   <div class="welcome-card-guru">
     <div class="welcome-text-content">
@@ -549,7 +558,7 @@
     </div>
   </div>
 
-  <!-- VIEW 2: FORM INPUT NILAI & MATRIKS KELAS (AKTIFF SETELAH KLIK KELAS) -->
+  <!-- VIEW 2: FORM INPUT NILAI & MATRIKS KELAS -->
   <div id="view-form-nilai" class="hidden">
     <button onclick="kembaliKeDaftarKelas()" style="background: #ffffff; border: 1px solid #cbd5e1; color: #475569; padding: 6px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 15px; font-size: 12px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
       <i class="fa-solid fa-arrow-left"></i> Kembali ke Pilih Kelas
@@ -621,7 +630,7 @@
       </div>
     </div>
 
-    <!-- MATRIKS NILAI KELAS AKTIFF (TABEL SCROLLABLE + TAB FILTER) -->
+    <!-- MATRIKS NILAI KELAS -->
     <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
         <div>
@@ -629,7 +638,6 @@
           <span style="font-size: 10px; color: #64748b;">Ringkasan matriks nilai siswa di kelas ini</span>
         </div>
 
-        <!-- TAB FILTER KATEGORI PENILAIAN -->
         <div class="filter-kategori-group" style="display: flex; gap: 4px; background: #f1f5f9; padding: 3px; border-radius: 8px;">
           <button type="button" class="btn-tab-kat active" onclick="filterMatriksPenilaian('ALL', this)">Semua</button>
           <button type="button" class="btn-tab-kat" onclick="filterMatriksPenilaian('Tugas', this)">📝 Tugas</button>
@@ -638,14 +646,11 @@
         </div>
       </div>
 
-      <!-- CONTAINER TABEL MATRIKS TERKUNCI 350PX WITH STICKY HEADER -->
       <div style="overflow-x: auto; max-height: 350px; overflow-y: auto; border: 1px solid #f1f5f9; border-radius: 8px;">
         <table id="tbl-matriks-riwayat" style="width: 100%; border-collapse: collapse; font-size: 11px; text-align: center; color: #334155;">
           <thead style="position: sticky; top: 0; background: #f8fafc; z-index: 2; border-bottom: 1px solid #e2e8f0;">
             <tr style="color: #475569; font-weight: 700;">
               <th style="padding: 8px 10px; text-align: left; min-width: 140px; background: #f8fafc;">Siswa</th>
-              
-              <!-- KOLOM TUGAS 1-10 -->
               <th class="col-kat-tugas" style="padding: 8px 4px; background: #f8fafc;">T1</th>
               <th class="col-kat-tugas" style="padding: 8px 4px; background: #f8fafc;">T2</th>
               <th class="col-kat-tugas" style="padding: 8px 4px; background: #f8fafc;">T3</th>
@@ -656,15 +661,11 @@
               <th class="col-kat-tugas" style="padding: 8px 4px; background: #f8fafc;">T8</th>
               <th class="col-kat-tugas" style="padding: 8px 4px; background: #f8fafc;">T9</th>
               <th class="col-kat-tugas" style="padding: 8px 4px; background: #f8fafc;">T10</th>
-              
-              <!-- KOLOM UH 1-5 -->
               <th class="col-kat-uh" style="padding: 8px 4px; background: #f8fafc;">UH1</th>
               <th class="col-kat-uh" style="padding: 8px 4px; background: #f8fafc;">UH2</th>
               <th class="col-kat-uh" style="padding: 8px 4px; background: #f8fafc;">UH3</th>
               <th class="col-kat-uh" style="padding: 8px 4px; background: #f8fafc;">UH4</th>
               <th class="col-kat-uh" style="padding: 8px 4px; background: #f8fafc;">UH5</th>
-              
-              <!-- KOLOM UJIAN -->
               <th class="col-kat-ujian" style="padding: 8px 4px; background: #f8fafc; color: #2563eb;">PTS</th>
               <th class="col-kat-ujian" style="padding: 8px 4px; background: #f8fafc; color: #16a34a;">PAS</th>
             </tr>
@@ -706,7 +707,7 @@
     </div>
   </div>
 
-</div> <!-- <-- TAG PENUTUP GURU DASHBOARD PINDAH KE SINI -->
+</div> <!-- PENUTUP #guru-dashboard -->
 
 <!-- CSS KHUSUS TOMBOL TAB FILTER MATRIKS -->
 <style>
@@ -948,7 +949,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=14"></script>
+  <script src="app.js?v=15"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {
