@@ -767,3 +767,15 @@ td:nth-child(5) {
     padding: 10px !important;
   }
 }
+/* Custom Background Foto Sekolah */
+body {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('bg-sekolah.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+#section-login {
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('bg-sekolah.jpg') no-repeat center center / cover !important;
+  background-attachment: fixed !important;
+}
