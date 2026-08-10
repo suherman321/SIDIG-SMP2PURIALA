@@ -1243,6 +1243,8 @@ async function loadKehadiranSiswa() {
 
     if (result.success) {
       rawDataKehadiranSiswa = result.data || [];
+	  // TAMBAHKAN BARIS INI: Hitung & update persentase di dashboard
+  updateRangkumanKehadiranSiswa(rawDataKehadiranSiswa);
       renderKartuMapelKehadiran(rawDataKehadiranSiswa);
     } else {
       gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ef4444;">Gagal: ${result.message}</div>`;
@@ -2310,4 +2312,30 @@ function toggleSidebarSiswa() {
   if (sidebar) {
     sidebar.classList.toggle('collapsed');
   }
+}
+// Fungsi Menghitung Persentase Kehadiran Murni (Pendekatan 1)
+function updateRangkumanKehadiranSiswa(dataPresensiSiswa) {
+  const elemKehadiran = document.getElementById('stat-kehadiran-persen');
+  if (!elemKehadiran) return;
+
+  // Jika belum ada data presensi terinput
+  if (!dataPresensiSiswa || dataPresensiSiswa.length === 0) {
+    elemKehadiran.innerText = '0%';
+    return;
+  }
+
+  // Total semua sesi/mapel yang sudah diisi absen oleh guru
+  const totalPertemuan = dataPresensiSiswa.length;
+
+  // Hitung berapa kali siswa berstatus 'Hadir' atau 'H'
+  const totalHadir = dataPresensiSiswa.filter(item => {
+    const status = (item.status || '').toString().trim().toLowerCase();
+    return status === 'hadir' || status === 'h';
+  }).length;
+
+  // Hitung persentase (Murni Hadir / Total Pertemuan * 100)
+  const persentase = Math.round((totalHadir / totalPertemuan) * 100);
+
+  // Tampilkan ke UI
+  elemKehadiran.innerText = `${persentase}%`;
 }
