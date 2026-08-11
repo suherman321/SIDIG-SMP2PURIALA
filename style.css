@@ -775,52 +775,28 @@ body {
   background-repeat: no-repeat !important;
   background-attachment: fixed !important;
 }
-#section-login {
-  background: transparent !important;
-  background-attachment: scroll !important;
-}
-/* Tembak paksa di baris paling bawah CSS */
+/* Gunakan ID atau Class untuk penargetan CSS */
+#section-login.login-card,
 div.login-card {
-  background-image: url('https://lh3.googleusercontent.com/d/12oNG51C-ujMOBG9EfLk8dPzCJHndXw_G') !important; /* Gunakan path lokal */
-  background-size: cover !important;
+  background-image: url('https://lh3.googleusercontent.com/d/12oNG51C-ujMOBG9EfLk8dPzCJHndXw_G=s1600') !important; /* Gunakan path lokal */
+  background-size: 100% 100% !important; /* Agar gambar memenuhi seluruh area kartu */
   background-position: center !important;
   background-repeat: no-repeat !important;
+  
+  /* 2. UBAH DARI TRANSPARENT KE SOLID BERWARNA PUTIH/BIRU */
+  /* Ini agar gambar di belakang tidak tembus ke latar belakang utama */
+  background-color: #70c4ff !important; 
+
+  /* 3. Matikan efek kaca/transparansi */
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  background-color: transparent !important;
+
   border-radius: 16px !important;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
   border: 1px solid rgba(255, 255, 255, 0.4) !important;
-}
-
-/* Penyesuaian Warna Teks Judul & Label agar Kontras */
-.login-card .title-main,
-.login-card .title-sub {
-  color: #0f172a !important; /* Warna biru gelap pekat */
-  font-weight: 700 !important;
-}
-
-.login-card .divider-text span,
-.login-card .form-label {
-  color: #1e293b !important;
-  font-weight: 600 !important;
-}
-
-/* Styling Input Field Transparan Gelap */
-.login-card .custom-input {
-  background: rgba(15, 23, 42, 0.35) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-}
-
-.login-card .custom-input::placeholder {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-
-/* Teks Petunjuk Footer di Bagian Bawah Putih */
-.login-card .footer-note {
-  color: #334155 !important;
-  font-weight: 500 !important;
+  
+  /* 4. Pastikan overflow hidden agar radius sudut memotong gambar dengan rapi */
+  overflow: hidden !important; 
 }
 /* Styling Header Khusus Admin */
 .admin-header-bar {
