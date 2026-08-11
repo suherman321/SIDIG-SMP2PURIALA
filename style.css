@@ -782,9 +782,9 @@ body {
 /* Kotak Login Transparan 50% Warna Biru Gelap */
 .login-card {
   background: rgba(15, 23, 42, 0.8) !important;   /* Transparansi 50% (0.5) */
-  backdrop-filter: blur(8px) !important;          /* Efek blur halus di belakang kotak */
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(10px) !important;          /* Efek blur halus di belakang kotak */
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Penjagaan Warna Teks Agar Tetap Ringan & Jelas */
@@ -793,6 +793,4 @@ body {
 .login-card .title-sub,
 .login-card .divider-text span {
   color: #ffffff !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);      /* Bayangan teks agar tidak silau */
-}
 }
