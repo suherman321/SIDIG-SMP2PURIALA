@@ -17,7 +17,7 @@
 
   <!-- FONT AWESOME & CSS EXTERNAL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=4.3">
+  <link rel="stylesheet" href="style.css?v=4.4">
 </head>
 <body>
 
@@ -91,13 +91,14 @@
     <!-- ========================================== -->
     <div id="admin-dashboard" class="hidden" style="color: #1e293b;">
   <!-- HEADER BAR ADMIN (Hasil Adaptasi dari Header Guru) -->
-<div class="admin-header-bar" style="background: #ffffff; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+<!-- PERBAIKAN PENULISAN -->
+<header style="background: #ffffff; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; display: flex !important; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
   <span id="user-info" style="font-weight: 600; color: #334155;">Admin</span>
   <div style="display: flex; align-items: center; gap: 10px;">
     <span class="badge-online" style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;">● Online</span>
     <button onclick="logout()" style="background: #64748b; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600;">Logout</button>
   </div>
-</div>
+</header>
 
   <!-- PANEL KONTROL ADMINISTRATOR -->
       <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 16px; border-radius: 12px; color: white; margin-bottom: 20px;">
@@ -951,7 +952,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=43"></script>
+  <script src="app.js?v=44"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {
