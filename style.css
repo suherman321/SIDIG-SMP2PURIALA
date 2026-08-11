@@ -776,8 +776,8 @@ body {
   background-attachment: fixed !important;
 }
 #section-login {
-  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('bg-sekolah.jpg') no-repeat center center / cover !important;
-  background-attachment: fixed !important;
+  background: transparent !important;
+  background-attachment: scroll !important;
 }
 /* Menimpa semua gaya background bawaan */
 div.login-card {
