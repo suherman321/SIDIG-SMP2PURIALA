@@ -212,6 +212,12 @@ if (dataSiswa && dataSiswa.foto && dataSiswa.foto.trim() !== "") {
     const elemWelcomeAdmin = document.getElementById("admin-nama-welcome");
     if (elemUserInfo) elemUserInfo.innerText = `${namaTampil} (Admin)`;
     if (elemWelcomeAdmin) elemWelcomeAdmin.innerText = namaTampil;
+	// --- SISIPKAN DI SINI ---
+    const elemAdminEmail = document.getElementById("admin-email-display");
+    if (elemAdminEmail) {
+        elemAdminEmail.innerText = user.email || user.username || 'Administrator';
+    }
+    // -------------------------
 
     // Inisialisasi tampilan khusus Admin
     switchAdminTab('nilai'); 
