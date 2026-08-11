@@ -779,18 +779,44 @@ body {
   background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('bg-sekolah.jpg') no-repeat center center / cover !important;
   background-attachment: fixed !important;
 }
-/* Kotak Login Transparan 50% Warna Biru Gelap */
+/* Styling Kotak Login dengan Background Gambar Awan */
 .login-card {
-  background: rgba(15, 23, 42, 0.1) !important;   /* Transparansi 50% (0.5) */
-  backdrop-filter: blur(10px) !important;          /* Efek blur halus di belakang kotak */
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+  background-image: url('bg-card.png') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  border-radius: 16px !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  overflow: hidden !important;
 }
 
-/* Penjagaan Warna Teks Agar Tetap Ringan & Jelas */
-.login-card .form-label,
+/* Penyesuaian Warna Teks Judul & Label agar Kontras */
 .login-card .title-main,
-.login-card .title-sub,
-.login-card .divider-text span {
+.login-card .title-sub {
+  color: #0f172a !important; /* Warna biru gelap pekat */
+  font-weight: 700 !important;
+}
+
+.login-card .divider-text span,
+.login-card .form-label {
+  color: #1e293b !important;
+  font-weight: 600 !important;
+}
+
+/* Styling Input Field Transparan Gelap */
+.login-card .custom-input {
+  background: rgba(15, 23, 42, 0.35) !important;
   color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.login-card .custom-input::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Teks Petunjuk Footer di Bagian Bawah Putih */
+.login-card .footer-note {
+  color: #334155 !important;
+  font-weight: 500 !important;
 }
