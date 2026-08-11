@@ -781,11 +781,7 @@ body {
 }
 /* Styling Kotak Login dengan Background Gambar Awan */
 .login-card {
-  background-color: transparent !important;
-  background-image: url('bg-card.png?v=1') !important;
-  background-size: 100% 100% !important;
-  background-position: center !important;
-  background-repeat: no-repeat !important;
+  background: url('./bg-card.png') no-repeat center center / 100% 100% !important;
   border-radius: 16px !important;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
   border: 1px solid rgba(255, 255, 255, 0.4) !important;
