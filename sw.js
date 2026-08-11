@@ -1,9 +1,14 @@
-const CACHE_NAME = 'pwa-nilai-v28'; // Naikkan versi cache
+const CACHE_NAME = 'pwa-nilai-v29'; // Naikkan versi cache ke v29
+
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
+  './style.css',      // <--- Ditambahkan
   './app.js',
-  './manifest.json'
+  './manifest.json',
+  './logo.png',
+  './bg-sekolah.jpg',
+  './card.png'        // <--- Pastikan sesuai dengan nama file gambar Anda
 ];
 
 self.addEventListener('install', (e) => {
@@ -29,7 +34,7 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  // Abaikan jika bukan GET (Request POST/API tidak akan menyebabkan crash lagi)
+  // Abaikan jika bukan request GET
   if (e.request.method !== 'GET') {
     return;
   }
