@@ -782,7 +782,7 @@ body {
 /* Menimpa semua gaya background bawaan */
 div.login-card {
   background-color: transparent !important;
-  background-image: url('card.png') !important;
+  background-image: url('card.png?v=1') !important;
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
