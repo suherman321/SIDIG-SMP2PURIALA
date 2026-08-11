@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-nilai-v35'; // Naikkan versi cache ke v29
+const CACHE_NAME = 'pwa-nilai-v36'; // Naikkan versi cache ke v29
 
 const ASSETS_TO_CACHE = [
   './',
