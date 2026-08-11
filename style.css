@@ -781,7 +781,7 @@ body {
 }
 /* Tembak paksa di baris paling bawah CSS */
 div.login-card {
-  background-image: url('./card.png') !important; /* Gunakan path lokal */
+  background-image: url('https://lh3.googleusercontent.com/d/12oNG51C-ujMOBG9EfLk8dPzCJHndXw_G') !important; /* Gunakan path lokal */
   background-size: cover !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
