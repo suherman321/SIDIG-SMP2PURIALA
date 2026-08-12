@@ -1473,7 +1473,7 @@ function initAdminTabListeners() {
 function toggleAdminSidebar() {
     const sidebar = document.querySelector('.admin-sidebar');
     if (sidebar) {
-        sidebar.classList.toggle('show');
+        sidebar.classList.toggle('collapsed');
     }
 }
 
