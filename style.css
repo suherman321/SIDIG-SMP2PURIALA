@@ -265,15 +265,198 @@ select.custom-input:focus, input.custom-input:focus {
   border-bottom: 1px solid #f1f5f9;
   color: #1e293b;
 }
+
+/* ==========================================================================
+   STYLING SPESIFIK DASHBOARD ADMIN MODERN (LAYOUT BARU)
+   ========================================================================== */
+.admin-layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.admin-sidebar {
+  width: 250px;
+  background-color: #0b3b60;
+  color: #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 16px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.brand-logo {
+  font-size: 22px;
+  background: rgba(255, 255, 255, 0.15);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.brand-text h2 {
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.brand-text p {
+  font-size: 11px;
+  opacity: 0.75;
+}
+
+.admin-sidebar .admin-tab-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 20px;
+  border-bottom: none;
+  flex-grow: 1;
+}
+
+.nav-caption {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 6px;
+  padding-left: 8px;
+}
+
+.admin-sidebar .admin-tab-btn {
+  width: 100%;
+  border-radius: 6px;
+  background: transparent;
+  color: #e2e8f0;
+  border: none;
+  padding: 10px 12px;
+  justify-content: flex-start;
+}
+
+.admin-sidebar .admin-tab-btn:hover {
+  background-color: #134e7a;
+  color: #ffffff;
+}
+
+.admin-sidebar .admin-tab-btn.active {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-logo {
+  width: 28px;
+  height: 28px;
+}
+
+.footer-text strong {
+  display: block;
+  font-size: 10px;
+  color: #ffffff;
+}
+
+.footer-text small {
+  font-size: 9px;
+  opacity: 0.7;
+}
+
+.admin-main-content {
+  margin-left: 250px;
+  flex-grow: 1;
+  padding: 20px 24px;
+  min-width: 0;
+}
+
+.admin-topbar {
+  background: #ffffff;
+  padding: 12px 18px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+}
+
+.btn-logout-head {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.admin-hero-banner {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  padding: 18px 20px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.admin-content-body {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.panel-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 992px) {
+  .admin-sidebar {
+    width: 70px;
+    padding: 12px 8px;
+  }
+  .brand-text, .nav-caption, .admin-tab-btn span, .footer-text {
+    display: none;
+  }
+  .admin-sidebar .admin-tab-btn {
+    justify-content: center;
+  }
+  .admin-main-content {
+    margin-left: 70px;
+    padding: 12px;
+  }
+}
+
 /* ==========================================================================
    RESET & BASE STYLES
    ========================================================================== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background-color: #0f172a;
@@ -314,7 +497,6 @@ h1, h2, .dashboard-title {
   margin-bottom: 16px;
 }
 
-/* Styling Tombol Standar */
 button, .btn {
   font-family: inherit;
   font-size: 13px;
@@ -334,7 +516,6 @@ button:hover, .btn:hover {
   color: #0f172a;
 }
 
-/* Class Tombol Khusus */
 .btn-back {
   background-color: #f1f5f9;
   border: none;
@@ -351,14 +532,13 @@ button:hover, .btn:hover {
   border-radius: 8px;
   font-size: 12px;
   cursor: pointer;
-  position: static !important; /* Memaksa tombol lepas dari position absolute */
+  position: static !important;
 }
 
 .btn-logout:hover {
   background-color: #fecaca;
 }
 
-/* Badge Online Status */
 .badge-online, .online-status {
   background-color: #dcfce7;
   color: #166534;
@@ -385,7 +565,6 @@ table, .table-pbm {
   overflow: hidden;
 }
 
-/* Header Tabel */
 th, thead td {
   background-color: #f8fafc;
   color: #475569;
@@ -399,7 +578,6 @@ th, thead td {
   text-align: left;
 }
 
-/* Isi Tabel */
 td {
   padding: 14px 16px;
   font-size: 13.5px;
@@ -446,6 +624,7 @@ td:nth-child(4),
 td:nth-child(5) {
   line-height: 1.6;
 }
+
 /* ==========================================================================
    STYLE DASHBOARD GURU RESPONSIF
    ========================================================================== */
@@ -456,7 +635,6 @@ td:nth-child(5) {
   border-radius: 16px;
 }
 
-/* Welcome Card */
 .welcome-card-guru {
   background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
   border-radius: 20px;
@@ -483,13 +661,13 @@ td:nth-child(5) {
 }
 
 .guru-welcome-title {
-  font-size: clamp(16px, 4.5vw, 22px); /* Font otomatis menyesuaikan layar */
+  font-size: clamp(16px, 4.5vw, 22px);
   font-weight: 800;
   color: #0f172a;
   margin: 4px 0;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* Mengubah email/nama panjang jadi titik-titik jika melebihi batas */
+  text-overflow: ellipsis;
   max-width: 100%;
 }
 
@@ -528,10 +706,9 @@ td:nth-child(5) {
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
 }
 
-/* Grid Statistik */
 .guru-stats-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 Kolom di Ponsel */
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
   margin-bottom: 20px;
 }
@@ -578,10 +755,9 @@ td:nth-child(5) {
   color: #94a3b8;
 }
 
-/* Media Query untuk Layar Tablet / Desktop */
 @media (min-width: 640px) {
   .guru-stats-grid {
-    grid-template-columns: repeat(4, 1fr); /* 4 Kolom di Layar Lebar */
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 .status-container {
@@ -591,9 +767,7 @@ td:nth-child(5) {
   gap: 8px;
   margin-left: auto;
 }
-/* ==========================================================================
-   PEMBERSIPAN PAKSA - Sembunyikan Elemen Guru yang Bocor di Dashboard Admin
-   ========================================================================== */
+
 #admin-dashboard ~ .kelas-binaan-section,
 #admin-dashboard ~ .riwayat-nilai-section,
 #admin-dashboard #pilih-kelas-binaan,
@@ -603,15 +777,10 @@ td:nth-child(5) {
   display: none !important;
 }
 
-/* Menyembunyikan berdasarkan pola pembungkus umum di bawah admin tab */
-#admin-dashboard > div:not(#admin-view-nilai):not(#admin-view-absen):not(#admin-view-kasus):not(#admin-view-user):not(.admin-tab-nav):not(.welcome-card-guru):not(.guru-stats-grid) {
+#admin-dashboard > div:not(#admin-view-nilai):not(#admin-view-absen):not(#admin-view-kasus):not(#admin-view-user):not(.admin-tab-nav):not(.welcome-card-guru):not(.guru-stats-grid):not(.admin-layout-wrapper) {
   display: none !important;
 }
-/* ==========================================
-   DASHBOARD SISWA MODERN LAYOUT
-   ========================================== */
 
-/* Main Container Dashboard Siswa */
 .siswa-dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -619,7 +788,6 @@ td:nth-child(5) {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* 1. Sidebar Kiri */
 .siswa-sidebar {
   width: 260px;
   background: #ffffff;
@@ -676,14 +844,12 @@ td:nth-child(5) {
   font-weight: 600;
 }
 
-/* 2. Content Area (Kanan) */
 .siswa-content {
   flex: 1;
   padding: 24px 32px;
   overflow-y: auto;
 }
 
-/* Header Dashboard */
 .siswa-header {
   display: flex;
   justify-content: space-between;
@@ -691,7 +857,6 @@ td:nth-child(5) {
   margin-bottom: 24px;
 }
 
-/* Banner Welcome */
 .siswa-banner {
   background: #ffffff;
   padding: 20px 24px;
@@ -700,7 +865,6 @@ td:nth-child(5) {
   margin-bottom: 24px;
 }
 
-/* Widget Stat Grid (3 Kolom Sejajar) */
 .siswa-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -708,15 +872,6 @@ td:nth-child(5) {
   margin-bottom: 28px;
 }
 
-.stat-card {
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-/* Cards Grid Menu Utama (Bawah) */
 .siswa-menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -736,14 +891,13 @@ td:nth-child(5) {
   transform: translateY(-4px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
-/* Media query khusus untuk tampilan HP (layar kecil) */
+
 @media (max-width: 768px) {
   .siswa-dashboard-container {
     display: block !important;
     position: relative;
   }
 
-  /* Sidebar dibuat melayang overlay di atas konten utama */
   .siswa-sidebar {
     position: fixed !important;
     top: 0;
@@ -756,18 +910,16 @@ td:nth-child(5) {
     width: 250px !important;
   }
 
-  /* Sembunyikan sidebar ke luar layar kiri saat status 'collapsed' */
   .siswa-sidebar.collapsed {
     transform: translateX(-100%);
   }
 
-  /* Konten utama memenuhi seluruh lebar layar */
   .siswa-content {
     width: 100% !important;
     padding: 10px !important;
   }
 }
-/* Custom Background Foto Sekolah */
+
 body {
   background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('bg-sekolah.jpg') !important;
   background-size: cover !important;
@@ -775,30 +927,22 @@ body {
   background-repeat: no-repeat !important;
   background-attachment: fixed !important;
 }
-/* Gunakan ID atau Class untuk penargetan CSS */
+
 #section-login.login-card,
 div.login-card {
-  background-image: url('https://lh3.googleusercontent.com/d/12oNG51C-ujMOBG9EfLk8dPzCJHndXw_G=s1600') !important; /* Gunakan path lokal */
-  background-size: 100% 100% !important; /* Agar gambar memenuhi seluruh area kartu */
+  background-image: url('https://lh3.googleusercontent.com/d/12oNG51C-ujMOBG9EfLk8dPzCJHndXw_G=s1600') !important;
+  background-size: 100% 100% !important;
   background-position: center !important;
   background-repeat: no-repeat !important;
-  
-  /* 2. UBAH DARI TRANSPARENT KE SOLID BERWARNA PUTIH/BIRU */
-  /* Ini agar gambar di belakang tidak tembus ke latar belakang utama */
   background-color: #70c4ff !important; 
-
-  /* 3. Matikan efek kaca/transparansi */
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-
   border-radius: 16px !important;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4) !important;
   border: 1px solid rgba(255, 255, 255, 0.4) !important;
-  
-  /* 4. Pastikan overflow hidden agar radius sudut memotong gambar dengan rapi */
   overflow: hidden !important; 
 }
-/* Styling Header Khusus Admin */
+
 .admin-header-bar {
   display: flex !important;
   justify-content: space-between !important;
@@ -822,7 +966,6 @@ div.login-card {
   gap: 12px;
 }
 
-/* Pastikan header ini lolos dari pembersihan paksa CSS */
 #admin-dashboard > .admin-header-bar {
   display: flex !important;
 }

@@ -17,7 +17,7 @@
 
   <!-- FONT AWESOME & CSS EXTERNAL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=4.4">
+  <link rel="stylesheet" href="style.css?v=4.5">
 </head>
 <body>
 
@@ -87,144 +87,186 @@
   <div id="section-app" class="app-card hidden">
     
     <!-- ========================================== -->
-    <!-- D. DASHBOARD ADMIN MODULAR -->
-    <!-- ========================================== -->
-    <div id="admin-dashboard" class="hidden" style="color: #1e293b;">
-  <!-- HEADER BAR ADMIN (Hasil Adaptasi dari Header Guru) -->
-<!-- PERBAIKAN PENULISAN -->
-<header style="background: #ffffff; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; display: flex !important; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-  <span id="user-info" style="font-weight: 600; color: #334155;">Admin</span>
-  <div style="display: flex; align-items: center; gap: 10px;">
-    <span class="badge-online" style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;">● Online</span>
-    <button onclick="logout()" style="background: #64748b; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600;">Logout</button>
-  </div>
-</header>
-
-  <!-- PANEL KONTROL ADMINISTRATOR -->
-      <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 16px; border-radius: 12px; color: white; margin-bottom: 20px;">
-        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 4px;"><i class="fa-solid fa-user-shield"></i> Panel Kontrol Administrator</h2>
-        <p style="font-size: 12px; opacity: 0.9;">Pusat pengelolaan nilai, presensi, buku kasus, dan akun pengguna sekolah.</p>
+<!-- D. DASHBOARD ADMIN MODULAR (MODERN REDESIGN) -->
+<!-- ========================================== -->
+<div id="admin-dashboard" class="hidden" style="color: #1e293b;">
+  
+  <div class="admin-layout-wrapper">
+    
+    <!-- 1. SIDEBAR NAVIGASI KIRI -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div class="brand-text">
+          <h2>SIDIG</h2>
+          <p>SMP Negeri 2 Puriala</p>
+        </div>
       </div>
 
-      <!-- TAB NAVIGASI UTAMA ADMIN -->
-      <div class="admin-tab-nav">
+      <!-- NAVIGASI TAB ADMIN (ID & onclick 100% sama dengan kode asli) -->
+      <nav class="admin-tab-nav">
+        <div class="nav-caption">MENU UTAMA</div>
+        
         <button class="admin-tab-btn active" id="btn-tab-admin-nilai" onclick="switchAdminTab('nilai')">
-          <i class="fa-solid fa-file-invoice"></i> 1. Monitoring Nilai
+          <i class="fa-solid fa-file-invoice"></i> <span>1. Monitoring Nilai</span>
         </button>
+        
         <button class="admin-tab-btn" id="btn-tab-admin-absen" onclick="switchAdminTab('absen')">
-          <i class="fa-solid fa-calendar-check"></i> 2. Monitoring Absen
+          <i class="fa-solid fa-calendar-check"></i> <span>2. Monitoring Absen</span>
         </button>
+        
         <button class="admin-tab-btn" id="btn-tab-admin-kasus" onclick="switchAdminTab('kasus')">
-          <i class="fa-solid fa-book-bookmark"></i> 3. Buku Kasus
+          <i class="fa-solid fa-book-bookmark"></i> <span>3. Buku Kasus</span>
         </button>
+        
         <button class="admin-tab-btn" id="btn-tab-admin-user" onclick="switchAdminTab('user')">
-          <i class="fa-solid fa-users-gear"></i> 4. Manajemen User
+          <i class="fa-solid fa-users-gear"></i> <span>4. Manajemen User</span>
         </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg" alt="Tut Wuri Handayani" class="footer-logo">
+        <div class="footer-text">
+          <strong>SMP NEGERI 2 PURIALA</strong>
+          <small>Sistem Informasi Digital</small>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 2. AREA KONTEN UTAMA -->
+    <main class="admin-main-content">
+      
+      <!-- HEADER BAR ADMIN (Preservasi ID user-info & fungsi logout) -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <span id="user-info" style="font-weight: 600; color: #334155;">Admin</span>
+        </div>
+        <div class="topbar-right">
+          <span class="badge-online">● Online</span>
+          <button onclick="logout()" class="btn-logout-head"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        </div>
+      </header>
+
+      <!-- PANEL KONTROL ADMINISTRATOR / BANNER WELCOME -->
+      <div class="admin-hero-banner">
+        <div class="hero-text">
+          <h2><i class="fa-solid fa-user-shield"></i> Panel Kontrol Administrator</h2>
+          <p>Pusat pengelolaan nilai, presensi, buku kasus, dan akun pengguna sekolah.</p>
+        </div>
       </div>
 
-      <!-- TAB 1: MONITORING NILAI KELAS -->
-<div id="admin-view-nilai">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-    <h4 style="font-size: 14px; font-weight: 700; color: #1e293b;">Data Nilai Terdaftar</h4>
-    <button class="admin-btn admin-btn-primary" onclick="loadAdminNilaiData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+      <!-- KONTEN PANELS -->
+      <div class="admin-content-body">
+
+        <!-- TAB 1: MONITORING NILAI KELAS -->
+        <div id="admin-view-nilai" class="tab-panel-content">
+          <div class="panel-section-header">
+            <h4>Data Nilai Terdaftar</h4>
+            <button class="admin-btn admin-btn-primary" onclick="loadAdminNilaiData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+          </div>
+
+          <!-- WADAH FILTER DI LUAR TABEL -->
+          <div id="nilai-filter-bar" style="margin-bottom: 12px; display: none;"></div>
+
+          <div class="admin-table-container">
+            <table class="admin-table" id="tabel-nilai-admin">
+              <thead>
+                <tr>
+                  <th>Kelas</th>
+                  <th>Siswa</th>
+                  <th>Mapel</th>
+                  <th>Jenis</th>
+                  <th>Nilai</th>
+                  <th style="text-align: center;">Aksi Admin</th>
+                </tr>
+              </thead>
+              <tbody id="tbl-admin-nilai-body">
+                <tr><td colspan="6" style="text-align:center; color: #64748b;">Memuat data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 2: MONITORING ABSEN SISWA -->
+        <div id="admin-view-absen" class="hidden tab-panel-content">
+          <div class="panel-section-header">
+            <h4>Data Kehadiran Siswa (Semua Mapel)</h4>
+            <button class="admin-btn admin-btn-primary" onclick="loadAdminAbsenData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+          </div>
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Mapel</th>
+                  <th>NISN / Siswa</th>
+                  <th>Tanggal</th>
+                  <th>Status</th>
+                  <th style="text-align: center;">Aksi Admin</th>
+                </tr>
+              </thead>
+              <tbody id="tbl-admin-absen-body">
+                <tr><td colspan="5" style="text-align:center; color: #64748b;">Memuat data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 3: MONITORING BUKU KASUS -->
+        <div id="admin-view-kasus" class="hidden tab-panel-content">
+          <div class="panel-section-header">
+            <h4>Buku Kasus / Catatan Kedisiplinan</h4>
+            <button class="admin-btn admin-btn-primary" onclick="bukaModalTambahKasus()"><i class="fa-solid fa-plus"></i> Tambah Catatan</button>
+          </div>
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Tanggal/Waktu</th>
+                  <th>NISN & Nama</th>
+                  <th>Kasus / Pelanggaran</th>
+                  <th>Tindak Lanjut</th>
+                  <th>Guru Piket</th>
+                  <th style="text-align: center;">Aksi Admin</th>
+                </tr>
+              </thead>
+              <tbody id="tbl-admin-kasus-body">
+                <tr><td colspan="6" style="text-align:center; color: #64748b;">Memuat data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TAB 4: MANAJEMEN PENGGUNA -->
+        <div id="admin-view-user" class="hidden tab-panel-content">
+          <div class="panel-section-header">
+            <h4>Daftar Pengguna Aplikasi (USER)</h4>
+            <button class="admin-btn admin-btn-primary" onclick="bukaModalTambahUser()"><i class="fa-solid fa-user-plus"></i> Tambah User Baru</button>
+          </div>
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Role</th>
+                  <th>Ref ID</th>
+                  <th style="text-align: center;">Aksi Manajemen</th>
+                </tr>
+              </thead>
+              <tbody id="tbl-admin-user-body">
+                <tr><td colspan="4" style="text-align:center; color: #64748b;">Memuat data user...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
   </div>
 
-  <!-- WADAH BARU UNTUK FILTER DI LUAR TABEL -->
-  <div id="nilai-filter-bar" style="margin-bottom: 12px; display: none;"></div>
-
-  <div class="admin-table-container">
-    <table class="admin-table" id="tabel-nilai-admin">
-      <thead>
-        <tr>
-          <th>Kelas</th>
-          <th>Siswa</th>
-          <th>Mapel</th>
-          <th>Jenis</th>
-          <th>Nilai</th>
-          <th style="text-align: center;">Aksi Admin</th>
-        </tr>
-      </thead>
-      <!-- SAMA KAN ID TBODY SESUAI INDEX.HTML ANDA -->
-      <tbody id="tbl-admin-nilai-body">
-        <tr><td colspan="6" style="text-align:center; color: #64748b;">Memuat data...</td></tr>
-      </tbody>
-    </table>
-  </div>
 </div>
-
-      <!-- TAB 2: MONITORING ABSEN SISWA -->
-      <div id="admin-view-absen" class="hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <h4 style="font-size: 14px; font-weight: 700; color: #1e293b;">Data Kehadiran Siswa (Semua Mapel)</h4>
-          <button class="admin-btn admin-btn-primary" onclick="loadAdminAbsenData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
-        </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Mapel</th>
-                <th>NISN / Siswa</th>
-                <th>Tanggal</th>
-                <th>Status</th>
-                <th style="text-align: center;">Aksi Admin</th>
-              </tr>
-            </thead>
-            <tbody id="tbl-admin-absen-body">
-              <tr><td colspan="5" style="text-align:center; color: #64748b;">Memuat data...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- TAB 3: MONITORING BUKU KASUS -->
-      <div id="admin-view-kasus" class="hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <h4 style="font-size: 14px; font-weight: 700; color: #1e293b;">Buku Kasus / Catatan Kedisiplinan</h4>
-          <button class="admin-btn admin-btn-primary" onclick="bukaModalTambahKasus()"><i class="fa-solid fa-plus"></i> Tambah Catatan</button>
-        </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Tanggal/Waktu</th>
-                <th>NISN & Nama</th>
-                <th>Kasus / Pelanggaran</th>
-                <th>Tindak Lanjut</th>
-                <th>Guru Piket</th>
-                <th style="text-align: center;">Aksi Admin</th>
-              </tr>
-            </thead>
-            <tbody id="tbl-admin-kasus-body">
-              <tr><td colspan="6" style="text-align:center; color: #64748b;">Memuat data...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- TAB 4: MANAJEMEN PENGGUNA -->
-      <div id="admin-view-user" class="hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <h4 style="font-size: 14px; font-weight: 700; color: #1e293b;">Daftar Pengguna Aplikasi (USER)</h4>
-          <button class="admin-btn admin-btn-primary" onclick="bukaModalTambahUser()"><i class="fa-solid fa-user-plus"></i> Tambah User Baru</button>
-        </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Ref ID</th>
-                <th style="text-align: center;">Aksi Manajemen</th>
-              </tr>
-            </thead>
-            <tbody id="tbl-admin-user-body">
-              <tr><td colspan="4" style="text-align:center; color: #64748b;">Memuat data user...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-    </div>
 
 
 <!-- A. DASHBOARD SISWA MODERN -->
@@ -952,7 +994,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=44"></script>
+  <script src="app.js?v=45"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {
