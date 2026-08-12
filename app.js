@@ -121,21 +121,20 @@ async function prosesLogin() {
 
     const result = await response.json();
 
-// Mengakomodasi pengecekan 'success' (boolean/string) atau 'status' === 'success'
-if (result.success === true || result.success === "true" || result.status === "success") {
-    localStorage.setItem("user_session", JSON.stringify(result.user));
-    const masterObj = {
+    if (result.success) {
+      localStorage.setItem("user_session", JSON.stringify(result.user));
+      const masterObj = {
         list_siswa: result.list_siswa || [],
         list_mapel: result.list_mapel || [],
         list_kelas: result.list_kelas || []
-    };
-    localStorage.setItem("master_data", JSON.stringify(masterObj));
+      };
+      localStorage.setItem("master_data", JSON.stringify(masterObj));
 
-    renderMasterData(masterObj.list_siswa, masterObj.list_mapel, masterObj.list_kelas);
-    showAppScreen(result.user);
-} else {
-    alert("Login gagal: " + (result.message || "Periksa kembali username dan password Anda."));
-}
+      renderMasterData(masterObj.list_siswa, masterObj.list_mapel, masterObj.list_kelas);
+      showAppScreen(result.user);
+    } else {
+      alert("Login gagal: " + result.message);
+    }
   } catch (error) {
     console.error("Error login:", error);
     alert("Gagal terhubung ke server. Pastikan koneksi internet stabil.");
@@ -1597,20 +1596,11 @@ function pilihMapelAdmin(mapelDipilih) {
   
   const tbody = document.getElementById("tbl-admin-nilai-body") || document.querySelector("#admin-view-nilai tbody");
   const tabel = tbody ? tbody.closest("table") : null;
-  
-  // Perbaikan selektor pencarian grid container kartu mapel
-  const gridContainer = document.getElementById("mapel-grid-container") || 
-                        document.querySelector("#admin-view-nilai .admin-card-grid") || 
-                        document.querySelector("#admin-view-nilai > div:not(#nilai-filter-bar)");
-                        
+  const gridContainer = document.getElementById("mapel-grid-container");
   const filterBarContainer = document.getElementById("nilai-filter-bar");
 
-  // Tampilkan tabel dan sembunyikan kartu mapel
   if (tabel) tabel.style.display = "table";
-  if (gridContainer) {
-    gridContainer.style.display = "none";
-    gridContainer.classList.add("hidden");
-  }
+  if (gridContainer) gridContainer.style.display = "none";
 
   const dataMapelIni = globalDataNilai.filter(item => item.mapel === mapelDipilih);
   
@@ -1642,21 +1632,81 @@ function pilihMapelAdmin(mapelDipilih) {
   renderBarisTabelNilai(dataMapelIni);
 }
 
+function renderBarisTabelNilai(dataList) {
+  const container = document.getElementById("tbl-admin-nilai-body") || document.querySelector("#admin-view-nilai tbody");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (!dataList || dataList.length === 0) {
+    container.innerHTML = `<tr><td colspan="6" class="text-center text-muted py-3" style="text-align:center;">Data tidak ditemukan.</td></tr>`;
+    return;
+  }
+
+  let html = "";
+  dataList.forEach((item) => {
+    const kelasSiswa = item.kelas || '-';
+    const namaSiswa = item.ref_id_siswa || item.namaSiswa || item.nama_siswa || '-';
+    const jenisPenilaian = item.jenis_penilaian || item.jenis || '-';
+    const idRow = item.id_transaksi || item.id || '';
+
+    html += `
+      <tr>
+        <td style="font-weight: 600;">${kelasSiswa}</td>
+        <td>${namaSiswa}</td>
+        <td>${item.mapel || mapelAktifNilai || '-'}</td>
+        <td>${jenisPenilaian}</td>
+        <td><b style="color: #2563eb;">${item.nilai !== undefined && item.nilai !== null ? item.nilai : '-'}</b></td>
+        <td style="text-align: center;">
+          <button onclick="handleEditNilai('${idRow}')" style="background-color: #2563eb; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; margin-right: 4px;" title="Edit">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+          <button onclick="handleHapusNilai('${idRow}')" style="background-color: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer;" title="Hapus">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function terapkanFilterNilai() {
+  const keywordNama = (
+    document.getElementById("filter-nama-nilai-luar")?.value || 
+    document.getElementById("filter-nama-nilai")?.value || ""
+  ).toLowerCase();
+  
+  const kelasPilihan = (
+    document.getElementById("filter-kelas-nilai-luar")?.value || 
+    document.getElementById("filter-kelas-nilai")?.value || ""
+  );
+
+  const hasilFilter = globalDataNilai.filter(item => {
+    const cocokMapel = item.mapel === mapelAktifNilai;
+    
+    const kelasSiswa = item.kelas || "";
+    const cocokKelas = kelasPilihan === "" || String(kelasSiswa).toUpperCase() === String(kelasPilihan).toUpperCase();
+    
+    const namaSiswa = (item.ref_id_siswa || item.namaSiswa || item.nama_siswa || "").toLowerCase();
+    const idSiswa = (item.id_transaksi || "").toString().toLowerCase();
+    const cocokNama = namaSiswa.includes(keywordNama) || idSiswa.includes(keywordNama);
+
+    return cocokMapel && cocokKelas && cocokNama;
+  });
+
+  renderBarisTabelNilai(hasilFilter);
+}
+
 function kembaliKeMapelNilai() {
   const filterBarContainer = document.getElementById("nilai-filter-bar");
-  const gridContainer = document.getElementById("mapel-grid-container") || 
-                        document.querySelector("#admin-view-nilai .admin-card-grid") || 
-                        document.querySelector("#admin-view-nilai > div:not(#nilai-filter-bar)");
-                        
+  const gridContainer = document.getElementById("mapel-grid-container");
   const tbody = document.getElementById("tbl-admin-nilai-body") || document.querySelector("#admin-view-nilai tbody");
   const tabel = tbody ? tbody.closest("table") : null;
 
   if (filterBarContainer) filterBarContainer.style.display = "none";
   if (tabel) tabel.style.display = "none";
-  if (gridContainer) {
-    gridContainer.style.display = "grid";
-    gridContainer.classList.remove("hidden");
-  }
+  if (gridContainer) gridContainer.style.display = "grid";
 
   tampilkanNilaiAdmin();
 }
