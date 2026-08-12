@@ -969,3 +969,50 @@ div.login-card {
 #admin-dashboard > .admin-header-bar {
   display: flex !important;
 }
+/* ==========================================================================
+   OPTIMASI TAMPILAN DASHBOARD ADMIN (FULL WIDTH & LAYOUT EFISIEN)
+   ========================================================================== */
+
+/* Buat kontainer admin memanfaatkan seluruh area layar secara maksimal */
+#admin-dashboard {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Penyesuaian layout utama admin */
+.admin-layout-wrapper {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.admin-main-content {
+  margin-left: 250px;
+  padding: 20px 30px;
+  width: calc(100% - 250px);
+  box-sizing: border-box;
+}
+
+/* Grid kartu monitoring (IPA, Matematika, dll) agar melebar secara proporsional */
+.admin-card-grid, 
+#admin-view-nilai > div,
+#admin-view-absen > div,
+#admin-view-kasus > div,
+#admin-view-user > div {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+  gap: 16px !important;
+  width: 100% !important;
+}
+
+/* Penyesuaian responsif untuk layar sedang/kecil */
+@media (max-width: 992px) {
+  .admin-main-content {
+    margin-left: 70px;
+    width: calc(100% - 70px);
+    padding: 15px;
+  }
+}
