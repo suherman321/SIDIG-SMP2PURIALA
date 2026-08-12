@@ -1473,9 +1473,22 @@ function initAdminTabListeners() {
 function toggleAdminSidebar() {
     const sidebar = document.querySelector('.admin-sidebar');
     if (sidebar) {
-        sidebar.classList.toggle('collapsed');
+        sidebar.classList.toggle('show');
     }
 }
+// 2. Otomatis Tutup Sidebar Admin saat salah satu Menu diklik
+document.addEventListener("DOMContentLoaded", () => {
+    const adminMenuButtons = document.querySelectorAll('.admin-sidebar .sidebar-btn');
+    
+    adminMenuButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const sidebar = document.querySelector('.admin-sidebar');
+            if (sidebar) {
+                sidebar.classList.remove('show'); // Menutup sidebar
+            }
+        });
+    });
+});
 
 // ==========================================
 // 1. MONITORING NILAI (ADMIN)
