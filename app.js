@@ -121,20 +121,21 @@ async function prosesLogin() {
 
     const result = await response.json();
 
-    if (result.success) {
-      localStorage.setItem("user_session", JSON.stringify(result.user));
-      const masterObj = {
+// Mengakomodasi pengecekan 'success' (boolean/string) atau 'status' === 'success'
+if (result.success === true || result.success === "true" || result.status === "success") {
+    localStorage.setItem("user_session", JSON.stringify(result.user));
+    const masterObj = {
         list_siswa: result.list_siswa || [],
         list_mapel: result.list_mapel || [],
         list_kelas: result.list_kelas || []
-      };
-      localStorage.setItem("master_data", JSON.stringify(masterObj));
+    };
+    localStorage.setItem("master_data", JSON.stringify(masterObj));
 
-      renderMasterData(masterObj.list_siswa, masterObj.list_mapel, masterObj.list_kelas);
-      showAppScreen(result.user);
-    } else {
-      alert("Login gagal: " + result.message);
-    }
+    renderMasterData(masterObj.list_siswa, masterObj.list_mapel, masterObj.list_kelas);
+    showAppScreen(result.user);
+} else {
+    alert("Login gagal: " + (result.message || "Periksa kembali username dan password Anda."));
+}
   } catch (error) {
     console.error("Error login:", error);
     alert("Gagal terhubung ke server. Pastikan koneksi internet stabil.");
