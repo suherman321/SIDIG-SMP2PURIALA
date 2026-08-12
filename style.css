@@ -970,10 +970,10 @@ div.login-card {
   display: flex !important;
 }
 /* ==========================================================================
-   OPTIMASI TAMPILAN DASHBOARD ADMIN (FULL WIDTH & LAYOUT EFISIEN)
+   OPTIMASI DASHBOARD ADMIN (FULL WIDTH & LAYOUT PROPORSIO NAL)
    ========================================================================== */
 
-/* Buat kontainer admin memanfaatkan seluruh area layar secara maksimal */
+/* 1. Atur kontainer utama admin agar fleksibel dan tidak dibatasi max-width */
 #admin-dashboard {
   width: 100% !important;
   max-width: 100% !important;
@@ -983,36 +983,50 @@ div.login-card {
   box-shadow: none !important;
 }
 
-/* Penyesuaian layout utama admin */
+/* 2. Layout utama mengikuti lebar layar setelah sidebar */
 .admin-layout-wrapper {
-  width: 100%;
-  min-height: 100vh;
+  display: flex !important;
+  width: 100% !important;
+  min-height: 100vh !important;
 }
 
 .admin-main-content {
-  margin-left: 250px;
-  padding: 20px 30px;
-  width: calc(100% - 250px);
-  box-sizing: border-box;
+  margin-left: 250px !important;
+  width: calc(100% - 250px) !important;
+  padding: 24px !important;
+  box-sizing: border-box !important;
+  flex: 1 !important;
 }
 
-/* Grid kartu monitoring (IPA, Matematika, dll) agar melebar secara proporsional */
-.admin-card-grid, 
+/* 3. Melebarkan seluruh komponen di dalam panel admin */
+#admin-dashboard .admin-topbar,
+#admin-dashboard .admin-hero-banner,
+#admin-dashboard .admin-content-body,
+#admin-dashboard .tab-panel-content {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* 4. Grid kartu (IPA, Matematika, dll) menyebar rata memenuhi area putih */
 #admin-view-nilai > div,
 #admin-view-absen > div,
 #admin-view-kasus > div,
-#admin-view-user > div {
+#admin-view-user > div,
+.admin-card-grid {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
-  gap: 16px !important;
+  gap: 20px !important;
   width: 100% !important;
 }
 
-/* Penyesuaian responsif untuk layar sedang/kecil */
+/* 5. Penyesuaian responsif layar kecil */
 @media (max-width: 992px) {
   .admin-main-content {
-    margin-left: 70px;
-    width: calc(100% - 70px);
-    padding: 15px;
+    margin-left: 70px !important;
+    width: calc(100% - 70px) !important;
+    padding: 16px !important;
   }
 }
