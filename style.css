@@ -1021,6 +1021,7 @@ div.login-card {
   font-size: 18px;
   font-weight: 800;
   letter-spacing: 0.5px;
+  color: #ffffff !important; /* Menjadikan teks SIDIG berwarna putih terang */
 }
 
 .brand-text span {
