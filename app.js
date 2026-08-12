@@ -1410,17 +1410,19 @@ function kembaliKeDaftarMapelKehadiran() {
 // ==========================================
 function switchAdminTab(tabName) {
     const views = {
-        nilai: document.getElementById("admin-view-nilai"),
-        absen: document.getElementById("admin-view-absen"),
-        kasus: document.getElementById("admin-view-kasus"),
-        user:  document.getElementById("admin-view-user")
+        dashboard: document.getElementById("admin-view-dashboard"),
+        nilai:     document.getElementById("admin-view-nilai"),
+        absen:     document.getElementById("admin-view-absen"),
+        kasus:     document.getElementById("admin-view-kasus"),
+        user:      document.getElementById("admin-view-user")
     };
 
     const buttons = {
-        nilai: document.getElementById("btn-tab-admin-nilai") || document.querySelector("[data-admin-tab='nilai']"),
-        absen: document.getElementById("btn-tab-admin-absen") || document.querySelector("[data-admin-tab='absen']"),
-        kasus: document.getElementById("btn-tab-admin-kasus") || document.querySelector("[data-admin-tab='kasus']"),
-        user:  document.getElementById("btn-tab-admin-user")  || document.querySelector("[data-admin-tab='user']")
+        dashboard: document.getElementById("btn-tab-admin-dashboard") || document.querySelector("[data-admin-tab='dashboard']"),
+        nilai:     document.getElementById("btn-tab-admin-nilai")     || document.querySelector("[data-admin-tab='nilai']"),
+        absen:     document.getElementById("btn-tab-admin-absen")     || document.querySelector("[data-admin-tab='absen']"),
+        kasus:     document.getElementById("btn-tab-admin-kasus")     || document.querySelector("[data-admin-tab='kasus']"),
+        user:      document.getElementById("btn-tab-admin-user")      || document.querySelector("[data-admin-tab='user']")
     };
 
     // 1. Reset class active dari semua tombol
@@ -1448,15 +1450,15 @@ function switchAdminTab(tabName) {
         activeBtn.classList.add("active");
     }
 
-    // 5. Muat data sesuai tab
-    if (tabName === 'nilai') tampilkanNilaiAdmin();
-    if (tabName === 'absen') tampilkanAbsenAdmin();
-    if (tabName === 'kasus') tampilkanKasusAdmin();
-    if (tabName === 'user')  tampilkanUserAdmin();
+    // 5. Muat data sesuai tab (Fungsi Bawaan Anda Tetap Dipanggil)
+    if (tabName === 'nilai' && typeof tampilkanNilaiAdmin === 'function') tampilkanNilaiAdmin();
+    if (tabName === 'absen' && typeof tampilkanAbsenAdmin === 'function') tampilkanAbsenAdmin();
+    if (tabName === 'kasus' && typeof tampilkanKasusAdmin === 'function') tampilkanKasusAdmin();
+    if (tabName === 'user'  && typeof tampilkanUserAdmin === 'function')  tampilkanUserAdmin();
 }
 
 function initAdminTabListeners() {
-    const tabs = ['nilai', 'absen', 'kasus', 'user'];
+    const tabs = ['dashboard', 'nilai', 'absen', 'kasus', 'user'];
     
     tabs.forEach(tab => {
         // Cari via ID terlebih dahulu, jika tidak ada cari via data-admin-tab
@@ -1465,6 +1467,14 @@ function initAdminTabListeners() {
             btn.onclick = () => switchAdminTab(tab);
         }
     });
+}
+
+// Tambahan: Toggle Sidebar untuk tampilan Layar HP/Tablet
+function toggleAdminSidebar() {
+    const sidebar = document.querySelector('.admin-sidebar');
+    if (sidebar) {
+        sidebar.classList.toggle('show');
+    }
 }
 
 // ==========================================
