@@ -17,7 +17,7 @@
 
   <!-- FONT AWESOME & CSS EXTERNAL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=4.4">
+  <link rel="stylesheet" href="style.css?v=4.5">
 </head>
 <body>
 
@@ -86,145 +86,861 @@
   <!-- 2. SECTION DASHBOARD -->
   <div id="section-app" class="app-card hidden">
     
-    <!-- ========================================== -->
-    <!-- D. DASHBOARD ADMIN MODULAR -->
-    <!-- ========================================== -->
-    <div id="admin-dashboard" class="hidden" style="color: #1e293b;">
-  <!-- HEADER BAR ADMIN (Hasil Adaptasi dari Header Guru) -->
-<!-- PERBAIKAN PENULISAN -->
-<header style="background: #ffffff; padding: 12px 20px; border-radius: 12px; margin-bottom: 20px; display: flex !important; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-  <span id="user-info" style="font-weight: 600; color: #334155;">Admin</span>
-  <div style="display: flex; align-items: center; gap: 10px;">
-    <span class="badge-online" style="background: #dcfce7; color: #166534; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600;">● Online</span>
-    <button onclick="logout()" style="background: #64748b; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600;">Logout</button>
-  </div>
-</header>
+<!-- ========================================== -->
+<!-- D. DASHBOARD ADMIN SIDIG -->
+<!-- ========================================== -->
+<div id="admin-dashboard" class="hidden">
 
-  <!-- PANEL KONTROL ADMINISTRATOR -->
-      <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); padding: 16px; border-radius: 12px; color: white; margin-bottom: 20px;">
-        <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 4px;"><i class="fa-solid fa-user-shield"></i> Panel Kontrol Administrator</h2>
-        <p style="font-size: 12px; opacity: 0.9;">Pusat pengelolaan nilai, presensi, buku kasus, dan akun pengguna sekolah.</p>
-      </div>
+    <div class="sidig-admin-layout">
 
-      <!-- TAB NAVIGASI UTAMA ADMIN -->
-      <div class="admin-tab-nav">
-        <button class="admin-tab-btn active" id="btn-tab-admin-nilai" onclick="switchAdminTab('nilai')">
-          <i class="fa-solid fa-file-invoice"></i> 1. Monitoring Nilai
-        </button>
-        <button class="admin-tab-btn" id="btn-tab-admin-absen" onclick="switchAdminTab('absen')">
-          <i class="fa-solid fa-calendar-check"></i> 2. Monitoring Absen
-        </button>
-        <button class="admin-tab-btn" id="btn-tab-admin-kasus" onclick="switchAdminTab('kasus')">
-          <i class="fa-solid fa-book-bookmark"></i> 3. Buku Kasus
-        </button>
-        <button class="admin-tab-btn" id="btn-tab-admin-user" onclick="switchAdminTab('user')">
-          <i class="fa-solid fa-users-gear"></i> 4. Manajemen User
-        </button>
-      </div>
+        <!-- ====================================== -->
+        <!-- SIDEBAR ADMIN -->
+        <!-- ====================================== -->
+        <aside class="sidig-admin-sidebar">
 
-      <!-- TAB 1: MONITORING NILAI KELAS -->
-<div id="admin-view-nilai">
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-    <h4 style="font-size: 14px; font-weight: 700; color: #1e293b;">Data Nilai Terdaftar</h4>
-    <button class="admin-btn admin-btn-primary" onclick="loadAdminNilaiData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
-  </div>
+            <!-- BRAND -->
+            <div class="sidig-admin-brand">
+                <div class="sidig-admin-brand-title">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    SIDIG
+                </div>
 
-  <!-- WADAH BARU UNTUK FILTER DI LUAR TABEL -->
-  <div id="nilai-filter-bar" style="margin-bottom: 12px; display: none;"></div>
+                <div class="sidig-admin-brand-subtitle">
+                    SMP Negeri 2 Puriala
+                </div>
+            </div>
 
-  <div class="admin-table-container">
-    <table class="admin-table" id="tabel-nilai-admin">
-      <thead>
-        <tr>
-          <th>Kelas</th>
-          <th>Siswa</th>
-          <th>Mapel</th>
-          <th>Jenis</th>
-          <th>Nilai</th>
-          <th style="text-align: center;">Aksi Admin</th>
-        </tr>
-      </thead>
-      <!-- SAMA KAN ID TBODY SESUAI INDEX.HTML ANDA -->
-      <tbody id="tbl-admin-nilai-body">
-        <tr><td colspan="6" style="text-align:center; color: #64748b;">Memuat data...</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+            <!-- MENU -->
+            <div class="sidig-admin-menu-title">
+                MENU UTAMA
+            </div>
+            <nav class="sidig-admin-nav">
 
-      <!-- TAB 2: MONITORING ABSEN SISWA -->
-      <div id="admin-view-absen" class="hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <h4 style="font-size: 14px; font-weight: 700; color: #1e293b;">Data Kehadiran Siswa (Semua Mapel)</h4>
-          <button class="admin-btn admin-btn-primary" onclick="loadAdminAbsenData()"><i class="fa-solid fa-rotate"></i> Refresh</button>
-        </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Mapel</th>
-                <th>NISN / Siswa</th>
-                <th>Tanggal</th>
-                <th>Status</th>
-                <th style="text-align: center;">Aksi Admin</th>
-              </tr>
-            </thead>
-            <tbody id="tbl-admin-absen-body">
-              <tr><td colspan="5" style="text-align:center; color: #64748b;">Memuat data...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+                <!-- DASHBOARD -->
+                <button
+                    type="button"
+                    id="btn-admin-dashboard"
+                    class="sidig-admin-nav-btn active"
+                    onclick="bukaDashboardAdmin()">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </button>
+				
+                <!-- MONITORING NILAI -->
+                <button
+                    type="button"
+                    id="btn-tab-admin-nilai"
+                    class="sidig-admin-nav-btn"
+                    onclick="bukaMenuAdmin('nilai')">
 
-      <!-- TAB 3: MONITORING BUKU KASUS -->
-      <div id="admin-view-kasus" class="hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <h4 style="font-size: 14px; font-weight: 700; color: #1e293b;">Buku Kasus / Catatan Kedisiplinan</h4>
-          <button class="admin-btn admin-btn-primary" onclick="bukaModalTambahKasus()"><i class="fa-solid fa-plus"></i> Tambah Catatan</button>
-        </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Tanggal/Waktu</th>
-                <th>NISN & Nama</th>
-                <th>Kasus / Pelanggaran</th>
-                <th>Tindak Lanjut</th>
-                <th>Guru Piket</th>
-                <th style="text-align: center;">Aksi Admin</th>
-              </tr>
-            </thead>
-            <tbody id="tbl-admin-kasus-body">
-              <tr><td colspan="6" style="text-align:center; color: #64748b;">Memuat data...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+                    <i class="fa-solid fa-file-invoice"></i>
+                    <span>Monitoring Nilai</span>
 
-      <!-- TAB 4: MANAJEMEN PENGGUNA -->
-      <div id="admin-view-user" class="hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <h4 style="font-size: 14px; font-weight: 700; color: #1e293b;">Daftar Pengguna Aplikasi (USER)</h4>
-          <button class="admin-btn admin-btn-primary" onclick="bukaModalTambahUser()"><i class="fa-solid fa-user-plus"></i> Tambah User Baru</button>
-        </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Ref ID</th>
-                <th style="text-align: center;">Aksi Manajemen</th>
-              </tr>
-            </thead>
-            <tbody id="tbl-admin-user-body">
-              <tr><td colspan="4" style="text-align:center; color: #64748b;">Memuat data user...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+                </button>
+
+
+                <!-- MONITORING ABSEN -->
+                <button
+                    type="button"
+                    id="btn-tab-admin-absen"
+                    class="sidig-admin-nav-btn"
+                    onclick="bukaMenuAdmin('absen')">
+
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <span>Monitoring Absen</span>
+
+                </button>
+
+
+                <!-- BUKU KASUS -->
+                <button
+                    type="button"
+                    id="btn-tab-admin-kasus"
+                    class="sidig-admin-nav-btn"
+                    onclick="bukaMenuAdmin('kasus')">
+
+                    <i class="fa-solid fa-book-bookmark"></i>
+                    <span>Buku Kasus</span>
+
+                </button>
+
+
+                <!-- MANAJEMEN USER -->
+                <button
+                    type="button"
+                    id="btn-tab-admin-user"
+                    class="sidig-admin-nav-btn"
+                    onclick="bukaMenuAdmin('user')">
+
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span>Manajemen User</span>
+
+                </button>
+
+            </nav>
+
+
+            <!-- SIDEBAR FOOTER -->
+            <div class="sidig-admin-sidebar-footer">
+
+                <div class="sidig-admin-sidebar-info">
+
+                    <div class="sidig-admin-sidebar-info-title">
+                        <i class="fa-solid fa-circle-info"></i>
+                        Panel Administrator
+                    </div>
+
+                    <div class="sidig-admin-sidebar-info-text">
+                        Pusat pengelolaan dan monitoring
+                        data SIDIG SMP Negeri 2 Puriala.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ====================================== -->
+        <!-- MAIN CONTENT ADMIN -->
+        <!-- ====================================== -->
+        <main class="sidig-admin-main">
+
+
+            <!-- ================================== -->
+            <!-- HEADER ADMIN -->
+            <!-- ================================== -->
+            <header class="sidig-admin-header">
+
+                <div class="sidig-admin-header-left">
+
+                    <div class="sidig-admin-header-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+
+                    <div>
+
+                        <div
+                            id="admin-page-title"
+                            class="sidig-admin-header-title">
+
+                            Dashboard Admin
+
+                        </div>
+
+                        <div class="sidig-admin-header-subtitle">
+
+                            Sistem Informasi Digital
+                            • SMP Negeri 2 Puriala
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sidig-admin-header-right">
+
+                    <span class="sidig-admin-online">
+                        <i class="fa-solid fa-circle"></i>
+                        Online
+                    </span>
+
+                    <button
+                        type="button"
+                        class="sidig-admin-logout"
+                        onclick="logout()">
+
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Logout
+
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================================== -->
+            <!-- DASHBOARD HOME -->
+            <!-- ================================== -->
+            <section
+                id="admin-home-view"
+                class="sidig-admin-tab-content active">
+
+
+                <!-- WELCOME -->
+                <div class="sidig-admin-welcome">
+
+                    <div class="sidig-admin-welcome-label">
+                        DASHBOARD ADMINISTRATOR
+                    </div>
+
+                    <div class="sidig-admin-welcome-title">
+                        Selamat Datang, Admin 👋
+                    </div>
+
+                    <div class="sidig-admin-welcome-text">
+                        Pusat monitoring dan pengelolaan
+                        SIDIG SMP Negeri 2 Puriala.
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- RINGKASAN UTAMA -->
+                <!-- ================================= -->
+                <div class="sidig-admin-summary">
+
+
+                    <!-- NILAI -->
+                    <div class="sidig-admin-stat">
+
+                        <div class="sidig-admin-stat-top">
+
+                            <div>
+
+                                <div class="sidig-admin-stat-label">
+                                    MONITORING
+                                </div>
+
+                                <div class="sidig-admin-stat-value">
+                                    Nilai
+                                </div>
+
+                            </div>
+
+                            <div class="sidig-admin-stat-icon blue">
+                                <i class="fa-solid fa-file-invoice"></i>
+                            </div>
+
+                        </div>
+
+                        <div class="sidig-admin-stat-desc">
+                            Data nilai yang diinput guru
+                        </div>
+
+                    </div>
+
+
+                    <!-- ABSEN -->
+                    <div class="sidig-admin-stat">
+
+                        <div class="sidig-admin-stat-top">
+
+                            <div>
+
+                                <div class="sidig-admin-stat-label">
+                                    MONITORING
+                                </div>
+
+                                <div class="sidig-admin-stat-value">
+                                    Absen
+                                </div>
+
+                            </div>
+
+                            <div class="sidig-admin-stat-icon green">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+
+                        </div>
+
+                        <div class="sidig-admin-stat-desc">
+                            Data kehadiran peserta didik
+                        </div>
+
+                    </div>
+
+
+                    <!-- KASUS -->
+                    <div class="sidig-admin-stat">
+
+                        <div class="sidig-admin-stat-top">
+
+                            <div>
+
+                                <div class="sidig-admin-stat-label">
+                                    MONITORING
+                                </div>
+
+                                <div class="sidig-admin-stat-value">
+                                    Kasus
+                                </div>
+
+                            </div>
+
+                            <div class="sidig-admin-stat-icon orange">
+                                <i class="fa-solid fa-book-bookmark"></i>
+                            </div>
+
+                        </div>
+
+                        <div class="sidig-admin-stat-desc">
+                            Catatan kedisiplinan siswa
+                        </div>
+
+                    </div>
+
+
+                    <!-- USER -->
+                    <div class="sidig-admin-stat">
+
+                        <div class="sidig-admin-stat-top">
+
+                            <div>
+
+                                <div class="sidig-admin-stat-label">
+                                    MANAJEMEN
+                                </div>
+
+                                <div class="sidig-admin-stat-value">
+                                    User
+                                </div>
+
+                            </div>
+
+                            <div class="sidig-admin-stat-icon purple">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </div>
+
+                        </div>
+
+                        <div class="sidig-admin-stat-desc">
+                            Pengelolaan akun aplikasi
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- AKSES CEPAT -->
+                <!-- ================================= -->
+                <div class="sidig-admin-section">
+
+                    <div class="sidig-admin-section-head">
+
+                        <div>
+
+                            <div class="sidig-admin-section-title">
+                                Akses Cepat
+                            </div>
+
+                            <div class="sidig-admin-section-subtitle">
+                                Pilih menu yang ingin Anda kelola.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sidig-admin-quick-grid">
+
+
+                        <!-- NILAI -->
+                        <button
+                            type="button"
+                            class="sidig-admin-quick-card"
+                            onclick="bukaMenuAdmin('nilai')">
+
+                            <div class="sidig-admin-quick-icon">
+                                <i class="fa-solid fa-file-invoice"></i>
+                            </div>
+
+                            <div class="sidig-admin-quick-title">
+                                Monitoring Nilai
+                            </div>
+
+                            <div class="sidig-admin-quick-text">
+                                Lihat data nilai yang telah
+                                diinput guru.
+                            </div>
+
+                        </button>
+
+
+                        <!-- ABSEN -->
+                        <button
+                            type="button"
+                            class="sidig-admin-quick-card"
+                            onclick="bukaMenuAdmin('absen')">
+
+                            <div class="sidig-admin-quick-icon">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+
+                            <div class="sidig-admin-quick-title">
+                                Monitoring Absen
+                            </div>
+
+                            <div class="sidig-admin-quick-text">
+                                Pantau data kehadiran
+                                peserta didik.
+                            </div>
+
+                        </button>
+
+
+                        <!-- KASUS -->
+                        <button
+                            type="button"
+                            class="sidig-admin-quick-card"
+                            onclick="bukaMenuAdmin('kasus')">
+
+                            <div class="sidig-admin-quick-icon">
+                                <i class="fa-solid fa-book-bookmark"></i>
+                            </div>
+
+                            <div class="sidig-admin-quick-title">
+                                Buku Kasus
+                            </div>
+
+                            <div class="sidig-admin-quick-text">
+                                Kelola catatan kasus
+                                dan pembinaan siswa.
+                            </div>
+
+                        </button>
+
+
+                        <!-- USER -->
+                        <button
+                            type="button"
+                            class="sidig-admin-quick-card"
+                            onclick="bukaMenuAdmin('user')">
+
+                            <div class="sidig-admin-quick-icon">
+                                <i class="fa-solid fa-users-gear"></i>
+                            </div>
+
+                            <div class="sidig-admin-quick-title">
+                                Manajemen User
+                            </div>
+
+                            <div class="sidig-admin-quick-text">
+                                Kelola akun Admin,
+                                Guru, dan Siswa.
+                            </div>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================= -->
+                <!-- INFORMASI SISTEM -->
+                <!-- ================================= -->
+                <div class="sidig-admin-section">
+
+                    <div class="sidig-admin-section-head">
+
+                        <div>
+
+                            <div class="sidig-admin-section-title">
+                                Informasi Sistem
+                            </div>
+
+                            <div class="sidig-admin-section-subtitle">
+                                Fungsi utama Dashboard Administrator.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="sidig-admin-info-grid">
+
+
+                        <!-- MONITORING -->
+                        <div class="sidig-admin-info-card">
+
+                            <div class="sidig-admin-info-card-title">
+
+                                <i
+                                    class="fa-solid fa-chart-column">
+                                </i>
+
+                                Monitoring Data
+
+                            </div>
+
+                            <div class="sidig-admin-info-card-text">
+
+                                Admin dapat memantau data nilai
+                                dan kehadiran yang tersimpan
+                                di dalam sistem SIDIG.
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PENGELOLAAN -->
+                        <div class="sidig-admin-info-card">
+
+                            <div class="sidig-admin-info-card-title">
+
+                                <i
+                                    class="fa-solid fa-shield-halved">
+                                </i>
+
+                                Pengelolaan Sistem
+
+                            </div>
+
+                            <div class="sidig-admin-info-card-text">
+
+                                Admin dapat mengelola buku kasus
+                                dan akun pengguna sesuai
+                                kebutuhan sekolah.
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- MONITORING NILAI -->
+            <!-- ID DIPERTAHANKAN UNTUK APP.JS -->
+            <!-- ================================== -->
+            <section
+                id="admin-view-nilai"
+                class="sidig-admin-tab-content hidden">
+
+                <div class="sidig-admin-page-heading">
+
+                    <div>
+
+                        <h4>
+                            <i class="fa-solid fa-file-invoice"></i>
+                            Monitoring Nilai
+                        </h4>
+
+                        <p>
+                            Data nilai yang telah tersimpan
+                            dari guru.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="admin-btn admin-btn-primary"
+                        onclick="loadAdminNilaiData()">
+
+                        <i class="fa-solid fa-rotate"></i>
+                        Refresh
+
+                    </button>
+
+                </div>
+
+
+                <!-- ID DIPERTAHANKAN -->
+                <div
+                    id="nilai-filter-bar"
+                    style="margin-bottom:12px; display:none;">
+                </div>
+
+
+                <div class="admin-table-container">
+
+                    <table
+                        class="admin-table"
+                        id="tabel-nilai-admin">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Kelas</th>
+                                <th>Siswa</th>
+                                <th>Mapel</th>
+                                <th>Jenis</th>
+                                <th>Nilai</th>
+                                <th>Aksi Admin</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <!-- ID DIPERTAHANKAN -->
+                        <tbody id="tbl-admin-nilai-body">
+
+                            <tr>
+
+                                <td
+                                    colspan="6"
+                                    style="text-align:center;">
+
+                                    Memuat data...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- MONITORING ABSEN -->
+            <!-- ID DIPERTAHANKAN UNTUK APP.JS -->
+            <!-- ================================== -->
+            <section
+                id="admin-view-absen"
+                class="sidig-admin-tab-content hidden">
+
+                <div class="sidig-admin-page-heading">
+
+                    <div>
+
+                        <h4>
+                            <i class="fa-solid fa-calendar-check"></i>
+                            Monitoring Absen
+                        </h4>
+
+                        <p>
+                            Data kehadiran peserta didik.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="admin-btn admin-btn-primary"
+                        onclick="loadAdminAbsenData()">
+
+                        <i class="fa-solid fa-rotate"></i>
+                        Refresh
+
+                    </button>
+
+                </div>
+
+
+                <div class="admin-table-container">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Mapel</th>
+                                <th>NISN / Siswa</th>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                                <th>Aksi Admin</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <!-- ID DIPERTAHANKAN -->
+                        <tbody id="tbl-admin-absen-body">
+
+                            <tr>
+
+                                <td
+                                    colspan="5"
+                                    style="text-align:center;">
+
+                                    Memuat data...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- BUKU KASUS -->
+            <!-- ID DIPERTAHANKAN UNTUK APP.JS -->
+            <!-- ================================== -->
+            <section
+                id="admin-view-kasus"
+                class="sidig-admin-tab-content hidden">
+
+                <div class="sidig-admin-page-heading">
+
+                    <div>
+
+                        <h4>
+                            <i class="fa-solid fa-book-bookmark"></i>
+                            Buku Kasus
+                        </h4>
+
+                        <p>
+                            Catatan kasus dan pembinaan
+                            peserta didik.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="admin-btn admin-btn-primary"
+                        onclick="bukaModalTambahKasus()">
+
+                        <i class="fa-solid fa-plus"></i>
+                        Tambah Catatan
+
+                    </button>
+
+                </div>
+
+
+                <div class="admin-table-container">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Tanggal/Waktu</th>
+                                <th>NISN & Nama</th>
+                                <th>Kasus / Pelanggaran</th>
+                                <th>Tindak Lanjut</th>
+                                <th>Guru Piket</th>
+                                <th>Aksi Admin</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <!-- ID DIPERTAHANKAN -->
+                        <tbody id="tbl-admin-kasus-body">
+
+                            <tr>
+
+                                <td
+                                    colspan="6"
+                                    style="text-align:center;">
+
+                                    Memuat data...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- MANAJEMEN USER -->
+            <!-- ID DIPERTAHANKAN UNTUK APP.JS -->
+            <!-- ================================== -->
+            <section
+                id="admin-view-user"
+                class="sidig-admin-tab-content hidden">
+
+                <div class="sidig-admin-page-heading">
+
+                    <div>
+
+                        <h4>
+                            <i class="fa-solid fa-users-gear"></i>
+                            Manajemen User
+                        </h4>
+
+                        <p>
+                            Kelola akun pengguna aplikasi SIDIG.
+                        </p>
+
+                    </div>
+
+                    <button
+                        class="admin-btn admin-btn-primary"
+                        onclick="bukaModalTambahUser()">
+
+                        <i class="fa-solid fa-user-plus"></i>
+                        Tambah User Baru
+
+                    </button>
+
+                </div>
+
+
+                <div class="admin-table-container">
+
+                    <table class="admin-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Ref ID</th>
+                                <th>Aksi Manajemen</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <!-- ID DIPERTAHANKAN -->
+                        <tbody id="tbl-admin-user-body">
+
+                            <tr>
+
+                                <td
+                                    colspan="4"
+                                    style="text-align:center;">
+
+                                    Memuat data user...
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+        </main>
 
     </div>
+
+</div>
 
 
 <!-- A. DASHBOARD SISWA MODERN -->
@@ -952,7 +1668,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=44"></script>
+  <script src="app.js?v=45"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {
