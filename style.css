@@ -975,7 +975,7 @@ div.login-card {
 
 /* Layout Wrapper Utama */
 .admin-layout-wrapper {
-  display: flex !important;
+  display: flex;
   min-height: 100vh;
   background-color: #f4f6f9;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
