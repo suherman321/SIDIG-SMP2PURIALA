@@ -875,7 +875,7 @@ function switchSiswaTab(tabName) {
   const dashboard = document.getElementById("siswa-dashboard");
   if (dashboard) dashboard.classList.remove("hidden");
 
-  // 2. Ambil semua elemen tab berdasarkan ID baru di HTML Anda
+  // 2. Ambil semua elemen tab berdasarkan ID di HTML Gambar 2
   const tabBeranda = document.getElementById("tab-siswa-beranda");
   const tabNilai = document.getElementById("tab-siswa-nilai");
   const tabKasus = document.getElementById("tab-siswa-kasus");
@@ -889,7 +889,7 @@ function switchSiswaTab(tabName) {
   if (tabKehadiran) tabKehadiran.classList.add("hidden");
   if (tabPbm) tabPbm.classList.add("hidden");
 
-  // 4. Sembunyikan tombol 'Kembali' jika ada (karena sudah pakai sidebar)
+  // 4. Sembunyikan tombol 'Kembali' lama (jika ada)
   const btnBackNilai = document.getElementById("btn-back-siswa-nilai");
   const btnBackKasus = document.getElementById("btn-back-siswa-kasus");
   const btnBackKehadiran = document.getElementById("btn-back-siswa-kehadiran");
@@ -919,8 +919,9 @@ function switchSiswaTab(tabName) {
   navItems.forEach(item => item.classList.remove('active'));
   const activeBtn = document.querySelector(`.sidebar-nav .nav-item[onclick*="'${tabName}'"]`);
   if (activeBtn) activeBtn.classList.add('active');
-  // Tutup sidebar otomatis di HP setelah menu diklik
-if (window.innerWidth <= 768) {
+
+  // Tutup sidebar otomatis di layar kecil/HP
+  if (window.innerWidth <= 768) {
     const sidebar = document.querySelector('.siswa-sidebar');
     if (sidebar) sidebar.classList.add('collapsed');
   }
@@ -1102,14 +1103,58 @@ function renderKartuMapel(dataNilai) {
   if (!gridContainer) return;
   gridContainer.innerHTML = "";
 
-  const mapelAdaNilai = new Set();
+  const mapelStats = {};
+  let totalSemuaNilai = 0;
+  let countNilai = 0;
+
   dataNilai.forEach(item => {
     if (item.mapel && item.nilai !== null && item.nilai !== undefined && item.nilai !== "") {
-      mapelAdaNilai.add(item.mapel.trim());
+      const mapelName = item.mapel.trim();
+      const val = parseFloat(item.nilai) || 0;
+
+      if (!mapelStats[mapelName]) {
+        mapelStats[mapelName] = { total: 0, count: 0 };
+      }
+      mapelStats[mapelName].total += val;
+      mapelStats[mapelName].count += 1;
+
+      totalSemuaNilai += val;
+      countNilai++;
     }
   });
 
-  if (mapelAdaNilai.size === 0) {
+  // 1. Hitung & Update Rata-Rata Nilai Keseluruhan ke Stat Widget Gambar 2
+  const elRataRata = document.getElementById("stat-nilai-rata");
+  if (elRataRata) {
+    const rataRata = countNilai > 0 ? (totalSemuaNilai / countNilai).toFixed(1) : "-";
+    elRataRata.innerText = rataRata;
+  }
+
+  // 2. Cari Mapel Nilai Tertinggi & Rendah
+  let mapelTertinggi = { nama: "-", rata: -1 };
+  let mapelRendah = { nama: "-", rata: 999 };
+
+  Object.keys(mapelStats).forEach(m => {
+    const avg = mapelStats[m].total / mapelStats[m].count;
+    if (avg > mapelTertinggi.rata) {
+      mapelTertinggi = { nama: m, rata: avg };
+    }
+    if (avg < mapelRendah.rata) {
+      mapelRendah = { nama: m, rata: avg };
+    }
+  });
+
+  const elTertinggi = document.getElementById("stat-mapel-tertinggi");
+  if (elTertinggi && mapelTertinggi.rata !== -1) {
+    elTertinggi.innerText = `${mapelTertinggi.nama} (${mapelTertinggi.rata.toFixed(0)})`;
+  }
+
+  const elRendah = document.getElementById("stat-mapel-rendah");
+  if (elRendah && mapelRendah.rata !== 999) {
+    elRendah.innerText = `${mapelRendah.nama} (${mapelRendah.rata.toFixed(0)})`;
+  }
+
+  if (Object.keys(mapelStats).length === 0) {
     gridContainer.innerHTML = `
       <div style="grid-column: 1/-1; text-align: center; padding: 30px; background: #f8fafc; border-radius: 8px; border: 1px dashed #cbd5e1; color: #64748b;">
         <i class="fa-solid fa-folder-open" style="font-size: 24px; margin-bottom: 8px; color: #94a3b8;"></i><br>
@@ -1118,8 +1163,8 @@ function renderKartuMapel(dataNilai) {
     return;
   }
 
-  mapelAdaNilai.forEach(namaMapel => {
-    const jumlahNilai = dataNilai.filter(d => d.mapel && d.mapel.trim() === namaMapel).length;
+  Object.keys(mapelStats).forEach(namaMapel => {
+    const jumlahNilai = mapelStats[namaMapel].count;
 
     const card = document.createElement("div");
     card.style.cssText = `
@@ -1218,6 +1263,27 @@ function kembaliKeDaftarMapel() {
 // ==========================================
 let rawDataKehadiranSiswa = [];
 
+function updateRangkumanKehadiranSiswa(dataKehadiran) {
+  let total = dataKehadiran.length;
+  let totalHadir = 0;
+
+  dataKehadiran.forEach(item => {
+    const ket = (item.keterangan || "").toLowerCase();
+    if (ket === "hadir") totalHadir++;
+  });
+
+  const persenHadir = total > 0 ? Math.round((totalHadir / total) * 100) : 0;
+  const persenAbsen = 100 - persenHadir;
+
+  const elPersen = document.getElementById("stat-kehadiran-persen");
+  const elCountHadir = document.getElementById("stat-count-hadir");
+  const elCountAbsen = document.getElementById("stat-count-absen");
+
+  if (elPersen) elPersen.innerText = persenHadir + "%";
+  if (elCountHadir) elCountHadir.innerText = persenHadir + "%";
+  if (elCountAbsen) elCountAbsen.innerText = persenAbsen + "%";
+}
+
 async function loadKehadiranSiswa() {
   const containerMapel = document.getElementById("container-kehadiran-level-mapel");
   const containerRincian = document.getElementById("container-kehadiran-level-rincian");
@@ -1252,8 +1318,7 @@ async function loadKehadiranSiswa() {
 
     if (result.success) {
       rawDataKehadiranSiswa = result.data || [];
-	  // TAMBAHKAN BARIS INI: Hitung & update persentase di dashboard
-  updateRangkumanKehadiranSiswa(rawDataKehadiranSiswa);
+      updateRangkumanKehadiranSiswa(rawDataKehadiranSiswa);
       renderKartuMapelKehadiran(rawDataKehadiranSiswa);
     } else {
       gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ef4444;">Gagal: ${result.message}</div>`;

@@ -17,7 +17,7 @@
 
   <!-- FONT AWESOME & CSS EXTERNAL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=4.7">
+  <link rel="stylesheet" href="style.css?v=4.8">
 </head>
 <body>
 
@@ -370,196 +370,341 @@
 
 </div> <!-- End admin-dashboard -->
 
-<!-- A. DASHBOARD SISWA MODERN -->
+<!-- ========================================== -->
+<!-- A. DASHBOARD SISWA MODERN (DESAIN GAMBAR 2) -->
+<!-- ========================================== -->
 <div id="siswa-dashboard" class="hidden">
   <div class="siswa-dashboard-container">
     
-    <!-- 1. SIDEBAR KIRI (Tetap diam di tempat) -->
+    <!-- 1. SIDEBAR KIRI MODERN -->
     <aside class="siswa-sidebar">
-      <div class="siswa-profile-card">
-        <!-- Avatar Foto & Icon Default -->
-        <div class="siswa-avatar-default" style="overflow: hidden; width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; background: #cbd5e1;">
-          <img id="sidebar-siswa-foto" src="" alt="Foto Siswa" style="width: 100%; height: 100%; object-fit: cover; display: none;">
-          <i id="sidebar-siswa-icon" class="fa-solid fa-user-graduate" style="font-size: 36px; color: #475569;"></i>
+      <!-- Logo Header Sidebar -->
+      <div class="sidebar-brand-siswa">
+        <div class="brand-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="brand-title-box">
+          <h2>SIDIG</h2>
+          <span>SMP Negeri 2 Puriala</span>
         </div>
-        <div style="font-weight: 700; font-size: 16px; color: #1e293b;" id="sidebar-siswa-nama">-</div>
-        <div style="font-size: 13px; color: #64748b; margin-top: 2px;" id="sidebar-siswa-kelas">Siswa</div>
       </div>
 
-      <!-- Menu Navigasi Kiri -->
+      <!-- Menu Navigasi Utama -->
       <nav class="sidebar-nav">
         <a class="nav-item active" onclick="switchSiswaTab('beranda')">
-          <i class="fa-solid fa-house"></i> Beranda
+          <i class="fa-solid fa-house"></i> <span>Beranda</span>
         </a>
         <a class="nav-item" onclick="switchSiswaTab('nilai')">
-          <i class="fa-solid fa-book-open"></i> Nilai Rapor
-        </a>
-        <a class="nav-item" onclick="switchSiswaTab('kasus')">
-          <i class="fa-solid fa-clipboard-list"></i> Buku Kasus
+          <i class="fa-solid fa-chart-simple"></i> <span>Nilai Saya</span>
         </a>
         <a class="nav-item" onclick="switchSiswaTab('kehadiran')">
-          <i class="fa-solid fa-calendar-check"></i> Kehadiran
+          <i class="fa-solid fa-calendar-check"></i> <span>Kehadiran</span>
         </a>
         <a class="nav-item" onclick="switchSiswaTab('pbm')">
-          <i class="fa-solid fa-book-reader"></i> PBM
+          <i class="fa-solid fa-book"></i> <span>Pembelajaran (PBM)</span>
+        </a>
+        <a class="nav-item" onclick="switchSiswaTab('kasus')">
+          <i class="fa-solid fa-seedling"></i> <span>Perkembangan Saya</span>
+        </a>
+
+        <div class="nav-divider"></div>
+
+        <a class="nav-item" onclick="switchSiswaTab('profil')">
+          <i class="fa-solid fa-user"></i> <span>Profil Saya</span>
+        </a>
+        <a class="nav-item" onclick="switchSiswaTab('pengaturan')">
+          <i class="fa-solid fa-gear"></i> <span>Pengaturan</span>
         </a>
       </nav>
+
+      <!-- Widget Streak Kehadiran (Gamifikasi) -->
+      <div class="streak-widget-card">
+        <div class="streak-header">
+          <span class="fire-emoji">🔥</span>
+          <div class="streak-title-box">
+            <span>Streak Kehadiran</span>
+            <h3><span id="streak-days-count">12</span> Hari</h3>
+            <small>Berturut-turut hadir</small>
+          </div>
+        </div>
+        <div class="streak-days-row">
+          <div class="day-check active"><span>M</span><i class="fa-solid fa-check"></i></div>
+          <div class="day-check active"><span>S</span><i class="fa-solid fa-check"></i></div>
+          <div class="day-check active"><span>S</span><i class="fa-solid fa-check"></i></div>
+          <div class="day-check active"><span>R</span><i class="fa-solid fa-check"></i></div>
+          <div class="day-check active"><span>K</span><i class="fa-solid fa-check"></i></div>
+          <div class="day-check active"><span>J</span><i class="fa-solid fa-check"></i></div>
+          <div class="day-check pending"><span>S</span><i class="fa-regular fa-circle"></i></div>
+        </div>
+        <button class="btn-streak-detail" onclick="switchSiswaTab('kehadiran')">Lihat Detail <i class="fa-solid fa-arrow-right"></i></button>
+      </div>
     </aside>
 
-    <!-- 2. KONTEN UTAMA (KANAN) -->
+    <!-- 2. KONTEN UTAMA DASHBOARD (KANAN) -->
     <main class="siswa-content">
-     <!-- HEADER DASHBOARD DENGAN TOMBOL GARIS 3 -->
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <!-- TOMBOL GARIS 3 -->
-          <button id="btn-toggle-sidebar" onclick="toggleSidebarSiswa()" style="background: #f1f5f9; border: 1px solid #cbd5e1; font-size: 18px; cursor: pointer; color: #1e293b; padding: 6px 12px; border-radius: 8px;">
+
+      <!-- TOPBAR DENGAN NOTIFIKASI & AVATAR PROFIL -->
+      <header class="siswa-topbar">
+        <div class="topbar-left-action">
+          <button id="btn-toggle-sidebar" class="btn-icon-toggle" onclick="toggleSidebarSiswa()">
             <i class="fa-solid fa-bars"></i>
           </button>
-          <h2 style="margin: 0; font-size: 18px; color: #1e293b;">Dashboard</h2>
         </div>
 
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <span style="background: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">• Online</span>
-          <button onclick="logout()" style="background: #475569; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;">Logout</button>
+        <div class="topbar-right-user">
+          <div class="notif-bell-badge">
+            <i class="fa-solid fa-bell"></i>
+            <span class="notif-count">3</span>
+          </div>
+
+          <div class="user-profile-dropdown" onclick="logout()">
+            <div class="user-avatar-circle">
+              <img id="sidebar-siswa-foto" src="" alt="Foto Siswa" style="display: none;">
+              <i id="sidebar-siswa-icon" class="fa-solid fa-user-graduate"></i>
+            </div>
+            <div class="user-name-box">
+              <span id="sidebar-siswa-nama" class="name-text">-</span>
+              <span id="sidebar-siswa-kelas" class="class-text">Siswa</span>
+            </div>
+            <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+          </div>
         </div>
-      </div>
-	  
-      <!-- TAB 1: BERANDA UTAMA -->
+      </header>
+
+      <!-- TAB BERANDA SISWA -->
       <div id="tab-siswa-beranda" class="tab-siswa-content">
-        <!-- Banner / Header Welcome -->
-        <div class="siswa-banner">
-          <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 8px;">
-            <img src="logo.png" alt="Logo Sekolah" style="width: 48px; height: auto;">
-            <div>
-              <div style="font-size: 11px; font-weight: 700; letter-spacing: 1px; color: #64748b; text-transform: uppercase;">SELAMAT DATANG SIDIG SISWA</div>
-              <h1 id="siswa-nama-welcome" style="font-size: 26px; font-weight: 800; color: #2563eb; margin: 2px 0; text-transform: uppercase;">-</h1>
+        
+        <!-- BANNER HERO 3D WELCOME -->
+        <div class="siswa-hero-banner">
+          <div class="hero-left-text">
+            <div class="greeting-wave">👋 Halo, <span id="siswa-nama-welcome">-</span>!</div>
+            <h2>Selamat datang kembali di SIDIG</h2>
+            <p>Semangat belajar hari ini! Yuk cek perkembangan belajarmu.</p>
+            
+            <div class="hero-tags-group">
+              <span class="hero-tag-pill" id="siswa-tag-kelas">Kelas IX</span>
+              <span class="hero-tag-pill">• Semester Ganjil 2026/2027</span>
+              <span class="hero-tag-pill highlight">Guru Wali: <strong id="siswa-guruwali-welcome">-</strong></span>
             </div>
           </div>
           
-          <!-- Info Wali Guru & Sekolah -->
-          <div style="font-size: 14px; font-weight: 600; color: #334155; margin-top: 6px;">
-            Guru Wali: <span id="siswa-guruwali-welcome" style="color: #2563eb;">-</span>
-          </div>
-          <p style="margin: 2px 0 0; color: #475569; font-size: 13px;">di Website SIDIG SMP Negeri 2 Puriala</p>
-        </div>
-
-        <!-- STATS / WIDGET GRID (TENGAH) -->
-        <div class="siswa-stats-grid">
-          <div class="stat-card">
-            <h4 style="margin: 0 0 12px 0; color: #334155; font-size: 14px;">Rangkuman Kehadiran</h4>
-            <div style="text-align: center; padding: 5px;">
-              <span style="font-size: 32px; font-weight: 800; color: #16a34a;" id="stat-kehadiran-persen">0%</span>
-              <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Kehadiran Semester Ini</div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <h4 style="margin: 0 0 12px 0; color: #334155; font-size: 14px;">Nilai Rata-Rata</h4>
-            <div style="text-align: center; padding: 5px;">
-              <span style="font-size: 32px; font-weight: 800; color: #2563eb;" id="stat-nilai-rata">-</span>
-              <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Rata-rata Keseluruhan Mapel</div>
-            </div>
-          </div>
-
-          <div class="stat-card">
-            <h4 style="margin: 0 0 12px 0; color: #334155; font-size: 14px;">Pengumuman Terbaru</h4>
-            <div style="font-size: 12px; color: #475569; line-height: 1.5;">
-              Selamat datang di Website SIDIG SMP Negeri 2 Puriala. Silakan periksa nilai dan absensi secara berkala.
-            </div>
+          <div class="hero-3d-illustration">
+            <!-- Ilustrasi Gedung / Banner 3D -->
+            <div class="illustration-badge-school">🏫</div>
           </div>
         </div>
 
-        <!-- MENU QUICK ACCESS (BAWAH) -->
-        <div class="siswa-menu-grid">
-          <div class="menu-card">
-            <div style="width: 48px; height: 48px; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: #2563eb; font-size: 18px;">
-              <i class="fa-solid fa-book-open"></i>
+        <!-- GRID 4 STAT CARD UTAMA -->
+        <div class="siswa-stats-4grid">
+          
+          <!-- Card 1: Nilai Rata-Rata -->
+          <div class="stat-box-v2 card-purple">
+            <div class="stat-box-header">
+              <div class="icon-box purple"><i class="fa-solid fa-chart-pie"></i></div>
+              <h4>Nilai Rata-Rata</h4>
             </div>
-            <h3 style="margin: 0 0 4px; font-size: 16px; color: #0f172a;">Nilai Rapor</h3>
-            <p style="font-size: 11px; color: #64748b; margin-bottom: 15px;">Lihat nilai dan hasil belajar terbaru</p>
-            <button onclick="switchSiswaTab('nilai')" style="width: 100%; background: #2563eb; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px;">Buka Menu</button>
+            <div class="stat-big-val" id="stat-nilai-rata">82,4</div>
+            <div class="stat-trend positive"><i class="fa-solid fa-arrow-up"></i> 4,2% dari sebelumnya</div>
+            <div class="stat-detail-list">
+              <div class="detail-item">
+                <span>Tertinggi</span>
+                <strong class="text-purple" id="stat-mapel-tertinggi">Matematika (91)</strong>
+              </div>
+              <div class="detail-item">
+                <span>Perlu Ditingkatkan</span>
+                <strong class="text-orange" id="stat-mapel-rendah">IPA (72)</strong>
+              </div>
+            </div>
           </div>
 
-          <div class="menu-card">
-            <div style="width: 48px; height: 48px; background: #fff7ed; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: #ea580c; font-size: 18px;">
-              <i class="fa-solid fa-clipboard-list"></i>
+          <!-- Card 2: Kehadiran -->
+          <div class="stat-box-v2 card-green">
+            <div class="stat-box-header">
+              <div class="icon-box green"><i class="fa-solid fa-calendar-check"></i></div>
+              <h4>Kehadiran</h4>
             </div>
-            <h3 style="margin: 0 0 4px; font-size: 16px; color: #0f172a;">Buku Kasus</h3>
-            <p style="font-size: 11px; color: #64748b; margin-bottom: 15px;">Lihat catatan pembinaan dan kedisiplinan</p>
-            <button onclick="switchSiswaTab('kasus')" style="width: 100%; background: #ea580c; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px;">Buka Menu</button>
+            <div class="stat-big-val" id="stat-kehadiran-persen">92%</div>
+            <div class="stat-trend positive"><i class="fa-solid fa-arrow-up"></i> 2% dari sebelumnya</div>
+            <div class="stat-progress-bar">
+              <div class="progress-fill green" style="width: 92%;"></div>
+            </div>
+            <div class="stat-split-row">
+              <span>Hadir: <strong id="stat-count-hadir">92%</strong></span>
+              <span>Tidak Hadir: <strong id="stat-count-absen">8%</strong></span>
+            </div>
           </div>
 
-          <div class="menu-card">
-            <div style="width: 48px; height: 48px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: #16a34a; font-size: 18px;">
-              <i class="fa-solid fa-calendar-check"></i>
+          <!-- Card 3: Kedisiplinan -->
+          <div class="stat-box-v2 card-orange">
+            <div class="stat-box-header">
+              <div class="icon-box orange"><i class="fa-solid fa-star"></i></div>
+              <h4>Kedisiplinan</h4>
             </div>
-            <h3 style="margin: 0 0 4px; font-size: 16px; color: #0f172a;">Kehadiran</h3>
-            <p style="font-size: 11px; color: #64748b; margin-bottom: 15px;">Lihat rekapitulasi presensi mata pelajaran</p>
-            <button onclick="switchSiswaTab('kehadiran')" style="width: 100%; background: #16a34a; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px;">Lihat Kehadiran</button>
+            <div class="stat-big-val text-orange" id="stat-kedisiplinan-status">Baik</div>
+            <div class="stat-subtext">Pertahankan kedisiplinanmu!</div>
+            <div class="badge-notice-box orange">
+              <i class="fa-solid fa-award"></i>
+              <span>Tidak ada pelanggaran. Hebat! 👍</span>
+            </div>
           </div>
 
-          <div class="menu-card">
-            <div style="width: 48px; height: 48px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; color: #16a34a; font-size: 18px;">
-              <i class="fa-solid fa-book-open"></i>
+          <!-- Card 4: Level Saya (Gamifikasi) -->
+          <div class="stat-box-v2 card-indigo">
+            <div class="stat-box-header">
+              <div class="icon-box indigo"><i class="fa-solid fa-trophy"></i></div>
+              <h4>Level Saya</h4>
             </div>
-            <h3 style="margin: 0 0 4px; font-size: 16px; color: #0f172a;">PBM</h3>
-            <p style="font-size: 11px; color: #64748b; margin-bottom: 15px;">Catatan Proses Belajar Mengajar</p>
-            <button onclick="switchSiswaTab('pbm')" style="width: 100%; background: #16a34a; color: white; border: none; padding: 10px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px;">Lihat PBM</button>
+            <div class="stat-big-val text-indigo">Level <span id="stat-siswa-level">8</span></div>
+            <div class="stat-xp-text"><span id="stat-xp-current">720</span> / 1.000 XP</div>
+            <div class="stat-progress-bar">
+              <div class="progress-fill indigo" style="width: 72%;"></div>
+            </div>
+            <div class="stat-xp-next"><i class="fa-solid fa-star"></i> 280 XP lagi menuju Level 9</div>
           </div>
+
         </div>
-      </div>
 
-<!-- TAB 2: NILAI RAPOR -->
+        <!-- GRID BAWAH (TARGET, PENCAPAIAN, AKTIVITAS) -->
+        <div class="siswa-bottom-grid">
+          
+          <!-- Target Saya -->
+          <div class="dashboard-widget-card">
+            <div class="widget-header">
+              <h4><i class="fa-solid fa-bullseye icon-blue"></i> Target Saya</h4>
+            </div>
+            <div class="target-body-box">
+              <span class="target-label">Target nilai semester</span>
+              <div class="target-score"><span id="target-score-val">85</span> / 90</div>
+              <div class="stat-progress-bar">
+                <div class="progress-fill blue" style="width: 85%;"></div>
+              </div>
+              <span class="target-subtext">Tinggal 5 poin lagi!</span>
+              <button class="btn-outline-action" onclick="switchSiswaTab('nilai')">Lihat Perkembangan <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Pencapaian Saya -->
+          <div class="dashboard-widget-card">
+            <div class="widget-header">
+              <h4><i class="fa-solid fa-trophy icon-gold"></i> Pencapaian Saya</h4>
+              <a class="link-see-all" onclick="switchSiswaTab('kasus')">Lihat Semua <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="achievement-list">
+              <div class="achievement-item">
+                <div class="achieve-icon green"><i class="fa-solid fa-shield-check"></i></div>
+                <div class="achieve-text">
+                  <h5>Hadir 20 hari berturut-turut</h5>
+                  <p>Kamu luar biasa!</p>
+                </div>
+              </div>
+              <div class="achievement-item">
+                <div class="achieve-icon blue"><i class="fa-solid fa-arrow-trend-up"></i></div>
+                <div class="achieve-text">
+                  <h5>Nilai meningkat</h5>
+                  <p>Terus pertahankan!</p>
+                </div>
+              </div>
+              <div class="achievement-item">
+                <div class="achieve-icon gold"><i class="fa-solid fa-clock"></i></div>
+                <div class="achieve-text">
+                  <h5>Tidak ada keterlambatan</h5>
+                  <p>Disiplin waktu sangat baik!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Aktivitas Terbaru -->
+          <div class="dashboard-widget-card">
+            <div class="widget-header">
+              <h4>Aktivitas Terbaru</h4>
+              <a class="link-see-all" onclick="switchSiswaTab('pbm')">Lihat Semua <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="activity-timeline-list">
+              <div class="activity-item">
+                <div class="act-icon purple"><i class="fa-solid fa-book-open"></i></div>
+                <div class="act-details">
+                  <h5>Nilai Matematika diperbarui</h5>
+                  <span>Hari ini • 10.30</span>
+                </div>
+                <span class="pill-badge purple">Baru</span>
+              </div>
+              <div class="activity-item">
+                <div class="act-icon green"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="act-details">
+                  <h5>Kehadiran diperbarui - Hadir</h5>
+                  <span>Kemarin • 07.45</span>
+                </div>
+                <span class="pill-badge green">Hadir</span>
+              </div>
+              <div class="activity-item">
+                <div class="act-icon blue"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <div class="act-details">
+                  <h5>PBM IPA diperbarui</h5>
+                  <span>12 Agustus 2026 • 14.20</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="act-icon orange"><i class="fa-solid fa-chart-simple"></i></div>
+                <div class="act-details">
+                  <h5>Nilai Bahasa Indonesia diperbarui</h5>
+                  <span>10 Agustus 2026 • 09.10</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- MOTIVATIONAL QUOTE BANNER FOOTER -->
+        <div class="quote-footer-banner">
+          <div class="quote-star-icon">⭐</div>
+          <p>“Sedikit kemajuan setiap hari akan menjadi pencapaian besar di masa depan.”</p>
+          <div class="quote-illustration-books">📚</div>
+        </div>
+
+      </div> <!-- ENND TAB BERANDA -->
+
+      <!-- TAB 2: NILAI RAPOR (ID & KODE LAMA DIPELIHARA SEPENUHNYA) -->
       <div id="tab-siswa-nilai" class="tab-siswa-content hidden">
-        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-          
-          <!-- LEVEL 1: GRID KARTU MAPEL NILAI -->
+        <div class="siswa-card-box">
           <div id="container-level-mapel">
-            <h2 style="margin-top:0; color: #1e293b; font-size: 18px; margin-bottom: 16px;">Nilai Rapor Siswa</h2>
-            <div id="grid-kartu-mapel" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
-              <!-- Kartu mata pelajaran akan dirender JS di sini -->
-            </div>
+            <h2 class="sub-page-title">Nilai Rapor Siswa</h2>
+            <div id="grid-kartu-mapel" class="grid-mapel-wrapper"></div>
           </div>
-
-          <!-- LEVEL 2: RINCIAN NILAI MAPEL -->
           <div id="container-level-rincian" class="hidden">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
-              <button onclick="kembaliKeDaftarMapel()" style="padding: 6px 12px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;">
-                <i class="fa-solid fa-arrow-left"></i> Kembali
-              </button>
-              <span id="badge-mapel-terpilih" style="background: #eff6ff; color: #2563eb; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 13px;"></span>
+            <div class="rincian-header">
+              <button class="btn-back-soft" onclick="kembaliKeDaftarMapel()"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+              <span id="badge-mapel-terpilih" class="pill-tag blue"></span>
             </div>
-            <h3 id="judul-mapel-terpilih" style="margin-top:0; font-size: 16px; color: #1e293b;">Rincian Nilai</h3>
-            <table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+            <h3 id="judul-mapel-terpilih" class="section-title">Rincian Nilai</h3>
+            <table class="data-table-siswa">
               <thead>
-                <tr style="background: #f8fafc; text-align: left; border-bottom: 2px solid #e2e8f0;">
-                  <th style="padding: 10px;">Nama</th>
-                  <th style="padding: 10px;">Mapel</th>
-                  <th style="padding: 10px;">Jenis</th>
-                  <th style="padding: 10px;">Nilai</th>
-                  <th style="padding: 10px;">Status</th>
-                  <th style="padding: 10px; text-align: center;">Aksi</th>
+                <tr>
+                  <th>Nama</th>
+                  <th>Mapel</th>
+                  <th>Jenis</th>
+                  <th>Nilai</th>
+                  <th>Status</th>
+                  <th style="text-align: center;">Aksi</th>
                 </tr>
               </thead>
               <tbody id="tabel-riwayat-siswa-body"></tbody>
             </table>
           </div>
-
         </div>
       </div>
 
-      <!-- TAB 3: BUKU KASUS -->
+      <!-- TAB 3: BUKU KASUS (ID & KODE LAMA DIPELIHARA SEPENUHNYA) -->
       <div id="tab-siswa-kasus" class="tab-siswa-content hidden">
-        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-          <h2 style="margin-top:0; color: #1e293b; font-size: 18px; margin-bottom: 16px;">Buku Kasus / Catatan Disiplin</h2>
-          <div id="loading-kasus" style="display: none; text-align: center; color: #64748b;">Memuat...</div>
-          <table style="width: 100%; border-collapse: collapse;">
+        <div class="siswa-card-box">
+          <h2 class="sub-page-title">Buku Kasus / Catatan Disiplin</h2>
+          <div id="loading-kasus" class="loading-state hidden">Memuat data...</div>
+          <table class="data-table-siswa">
             <thead>
-              <tr style="background: #f8fafc; text-align: left; border-bottom: 2px solid #e2e8f0;">
-                <th style="padding: 10px;">Waktu</th>
-                <th style="padding: 10px;">Pelanggaran / Kasus</th>
-                <th style="padding: 10px;">Tindak Lanjut</th>
-                <th style="padding: 10px;">Guru Piket</th>
+              <tr>
+                <th>Waktu</th>
+                <th>Pelanggaran / Kasus</th>
+                <th>Tindak Lanjut</th>
+                <th>Guru Piket</th>
               </tr>
             </thead>
             <tbody id="tabel-kasus-body"></tbody>
@@ -567,72 +712,61 @@
         </div>
       </div>
 
-      <!-- TAB 4: KEHADIRAN -->
+      <!-- TAB 4: KEHADIRAN (ID & KODE LAMA DIPELIHARA SEPENUHNYA) -->
       <div id="tab-siswa-kehadiran" class="tab-siswa-content hidden">
-        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-          
-          <!-- LEVEL 1: GRID MAPEL KEHADIRAN -->
+        <div class="siswa-card-box">
           <div id="container-kehadiran-level-mapel">
-            <h2 style="margin-top:0; color: #1e293b; font-size: 18px; margin-bottom: 16px;">Rekap Kehadiran Per Mata Pelajaran</h2>
-            <div id="grid-kartu-kehadiran-mapel" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
-              <!-- Kartu kehadiran dirender JS di sini -->
-            </div>
+            <h2 class="sub-page-title">Rekap Kehadiran Per Mata Pelajaran</h2>
+            <div id="grid-kartu-kehadiran-mapel" class="grid-mapel-wrapper"></div>
           </div>
-
-          <!-- LEVEL 2: RINCIAN KEHADIRAN -->
           <div id="container-kehadiran-level-rincian" class="hidden">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
-              <button onclick="kembaliKeDaftarMapelKehadiran()" style="padding: 6px 12px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;">
-                <i class="fa-solid fa-arrow-left"></i> Kembali
-              </button>
-              <span id="badge-mapel-kehadiran-terpilih" style="background: #f0fdf4; color: #16a34a; padding: 4px 12px; border-radius: 20px; font-weight: 600; font-size: 13px;"></span>
+            <div class="rincian-header">
+              <button class="btn-back-soft" onclick="kembaliKeDaftarMapelKehadiran()"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+              <span id="badge-mapel-kehadiran-terpilih" class="pill-tag green"></span>
             </div>
-            <h3 id="judul-mapel-kehadiran-terpilih" style="margin-top:0; font-size: 16px; color: #1e293b;">Rincian Kehadiran</h3>
-            
-            <!-- RINGKASAN STATISTIK -->
-            <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-              <span style="background:#f0fdf4; color:#16a34a; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Hadir: <span id="stat-hadir">0</span></span>
-              <span style="background:#eff6ff; color:#2563eb; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Izin: <span id="stat-izin">0</span></span>
-              <span style="background:#fefce8; color:#ca8a04; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Sakit: <span id="stat-sakit">0</span></span>
-              <span style="background:#fef2f2; color:#dc2626; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold;">Alpa: <span id="stat-alpa">0</span></span>
+            <h3 id="judul-mapel-kehadiran-terpilih" class="section-title">Rincian Kehadiran</h3>
+            <div class="attendance-summary-pills">
+              <span class="pill-stat green">Hadir: <strong id="stat-hadir">0</strong></span>
+              <span class="pill-stat blue">Izin: <strong id="stat-izin">0</strong></span>
+              <span class="pill-stat yellow">Sakit: <strong id="stat-sakit">0</strong></span>
+              <span class="pill-stat red">Alpa: <strong id="stat-alpa">0</strong></span>
             </div>
-
-            <table style="width: 100%; border-collapse: collapse;">
+            <table class="data-table-siswa">
               <thead>
-                <tr style="background: #f8fafc; text-align: left; border-bottom: 2px solid #e2e8f0;">
-                  <th style="padding: 10px;">Tanggal</th>
-                  <th style="padding: 10px;">Waktu</th>
-                  <th style="padding: 10px;">Keterangan</th>
+                <tr>
+                  <th>Tanggal</th>
+                  <th>Waktu</th>
+                  <th>Keterangan</th>
                 </tr>
               </thead>
               <tbody id="tabel-kehadiran-body"></tbody>
             </table>
           </div>
-
         </div>
       </div>
 
-      <!-- TAB 5: PBM -->
+      <!-- TAB 5: PBM (ID & KODE LAMA DIPELIHARA SEPENUHNYA) -->
       <div id="tab-siswa-pbm" class="tab-siswa-content hidden">
-        <div style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-          <h2 style="margin-top:0; color: #1e293b; font-size: 18px; margin-bottom: 16px;">Presensi Mata Pelajaran (PBM)</h2>
-          <table style="width: 100%; border-collapse: collapse;">
+        <div class="siswa-card-box">
+          <h2 class="sub-page-title">Presensi Mata Pelajaran (PBM)</h2>
+          <table class="data-table-siswa">
             <thead>
-              <tr style="background: #f8fafc; text-align: left; border-bottom: 2px solid #e2e8f0;">
-                <th style="padding: 10px;">Tanggal</th>
-                <th style="padding: 10px;">Mata Pelajaran</th>
-                <th style="padding: 10px;">Guru</th>
-                <th style="padding: 10px;">Permasalahan</th>
-                <th style="padding: 10px;">Penyelesaian</th>
+              <tr>
+                <th>Tanggal</th>
+                <th>Mata Pelajaran</th>
+                <th>Guru</th>
+                <th>Permasalahan</th>
+                <th>Penyelesaian</th>
               </tr>
             </thead>
             <tbody id="tbl-siswa-pbm-body"></tbody>
           </table>
-       </div> <!-- Penutup inner card PBM -->
-  </div> <!-- Penutup #tab-siswa-pbm -->
-  </main> <!-- Penutup <main class="siswa-content"> -->
-</div> <!-- Penutup <div class="siswa-dashboard-container"> -->
-</div> <!-- Penutup <div id="siswa-dashboard"> -->
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
 
 
 <!-- B. DASHBOARD GURU -->
@@ -1095,7 +1229,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=47"></script>
+  <script src="app.js?v=48"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {
