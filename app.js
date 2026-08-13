@@ -704,9 +704,13 @@ async function tampilkanRiwayatNilai() {
   if (role !== "SISWA") {
     const statTotalNilai = document.getElementById("stat-total-nilai");
     if (statTotalNilai) {
-      statTotalNilai.innerText = listNilai.length;
-    }
+      // 🛡️ Pastikan listNilai berupa array dan hitung nilainya
+    const totalData = Array.isArray(listNilai) ? listNilai.length : 0;
+    
+    // Tampilkan jumlahnya ke HTML
+    statTotalNilai.innerText = totalData;
   }
+}
 
   // C. HIT UTAMA MATRIKS: Panggil Render Matriks untuk Kelas Aktif
   if (role !== "SISWA" && kelasAktif) {
