@@ -17,7 +17,7 @@
 
   <!-- FONT AWESOME & CSS EXTERNAL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=5.7">
+  <link rel="stylesheet" href="style.css?v=5.8">
 </head>
 <body>
 
@@ -542,41 +542,30 @@
     <span id="stat-kedisiplinan-badge-text">Memuat data...</span>
   </div>
 </div>
-
-          <!-- Card 4: Level Saya (Gamifikasi) -->
-          <div class="stat-box-v2 card-indigo">
-            <div class="stat-box-header">
-              <div class="icon-box indigo"><i class="fa-solid fa-trophy"></i></div>
-              <h4>Level Saya</h4>
-            </div>
-            <div class="stat-big-val text-indigo">Level <span id="stat-siswa-level">8</span></div>
-            <div class="stat-xp-text"><span id="stat-xp-current">720</span> / 1.000 XP</div>
-            <div class="stat-progress-bar">
-              <div class="progress-fill indigo" style="width: 72%;"></div>
-            </div>
-            <div class="stat-xp-next"><i class="fa-solid fa-star"></i> 280 XP lagi menuju Level 9</div>
-          </div>
-
         </div>
 
         <!-- GRID BAWAH (TARGET, PENCAPAIAN, AKTIVITAS) -->
         <div class="siswa-bottom-grid">
           
-          <!-- Target Saya -->
-          <div class="dashboard-widget-card">
-            <div class="widget-header">
-              <h4><i class="fa-solid fa-bullseye icon-blue"></i> Target Saya</h4>
-            </div>
-            <div class="target-body-box">
-              <span class="target-label">Target nilai semester</span>
-              <div class="target-score"><span id="target-score-val">85</span> / 90</div>
-              <div class="stat-progress-bar">
-                <div class="progress-fill blue" style="width: 85%;"></div>
-              </div>
-              <span class="target-subtext">Tinggal 5 poin lagi!</span>
-              <button class="btn-outline-action" onclick="switchSiswaTab('nilai')">Lihat Perkembangan <i class="fa-solid fa-arrow-right"></i></button>
-            </div>
-          </div>
+<!-- Target Saya (Dinamis) -->
+<div class="dashboard-widget-card">
+  <div class="widget-header">
+    <h4><i class="fa-solid fa-bullseye icon-blue"></i> Target Saya</h4>
+  </div>
+  <div class="target-body-box">
+    <span class="target-label">Target nilai semester</span>
+    <div class="target-score">
+      <span id="target-score-val">0</span> / <span id="target-goal-val">90</span>
+    </div>
+    <div class="stat-progress-bar">
+      <div id="target-progress-bar" class="progress-fill blue" style="width: 0%;"></div>
+    </div>
+    <span id="target-subtext" class="target-subtext">Memuat target...</span>
+    <button class="btn-outline-action" onclick="switchSiswaTab('nilai')">
+      Lihat Perkembangan <i class="fa-solid fa-arrow-right"></i>
+    </button>
+  </div>
+</div>
 
           <!-- Pencapaian Saya -->
           <div class="dashboard-widget-card">
@@ -1226,7 +1215,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=57"></script>
+  <script src="app.js?v=58"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {

@@ -1221,6 +1221,8 @@ function renderKartuMapel(dataNilai) {
   if (elRataRata) {
     const rataRata = countNilai > 0 ? (totalSemuaNilai / countNilai).toFixed(1) : "-";
     elRataRata.innerText = rataRata;
+	// 🚀 SISIPKAN PEMANGGILAN DI SINI
+  updateWidgetTargetSaya(rataRata);
   }
 
   // 2. Cari Mapel Nilai Tertinggi & Rendah
@@ -2539,4 +2541,44 @@ function updateRangkumanKehadiranSiswa(dataPresensiSiswa) {
 
   const persentase = Math.round((totalHadir / totalPertemuan) * 100);
   elemKehadiran.innerText = `${persentase}%`;
+}
+
+// FUNGSI UNTUK MENGUPDATE KARTU TARGET SAYA SECARA DINAMIS
+function updateWidgetTargetSaya(nilaiRataRata) {
+  const elScore = document.getElementById("target-score-val");
+  const elGoal = document.getElementById("target-goal-val");
+  const elBar = document.getElementById("target-progress-bar");
+  const elSubtext = document.getElementById("target-subtext");
+
+  if (!elScore) return;
+
+  const targetGoal = 90; // Target semester
+  // 🛡️ PENJAGAAN DI SINI:
+  // Mengonversi string angka/desimal ke float. Jika nilainya "-" atau invalid, paksa jadi 0
+  let nilaiReal = parseFloat(nilaiRataRata);
+  if (isNaN(nilaiReal)) {
+    nilaiReal = 0;
+  }
+
+  // 1. Tampilkan Nilai Saat Ini & Goal
+  elScore.innerText = nilaiReal > 0 ? nilaiReal.toFixed(1) : "0";
+  if (elGoal) elGoal.innerText = targetGoal;
+
+  // 2. Hitung Persentase Progress Bar
+  const persen = Math.min(Math.round((nilaiReal / targetGoal) * 100), 100);
+  if (elBar) elBar.style.width = persen + "%";
+
+  // 3. Hitung Selisih Poin
+  if (elSubtext) {
+    if (nilaiReal === 0) {
+      elSubtext.innerText = "Belum ada data nilai";
+    } else if (nilaiReal >= targetGoal) {
+      elSubtext.innerText = "Target semester tercapai! 🎉";
+      elSubtext.style.color = "#16a34a"; // Warna hijau
+    } else {
+      const sisaPoin = (targetGoal - nilaiReal).toFixed(1);
+      elSubtext.innerText = `Tinggal ${sisaPoin} poin lagi!`;
+      elSubtext.style.color = ""; // Kembalikan ke warna CSS default
+    }
+  }
 }
