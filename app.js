@@ -149,6 +149,7 @@ async function prosesLogin() {
           switchSiswaTab('beranda');
           if (typeof loadKehadiranSiswa === "function") loadKehadiranSiswa();
           if (typeof muatHalamanNilaiSiswa === "function") muatHalamanNilaiSiswa();
+		  if (typeof loadBukuKasusSiswa === "function") loadBukuKasusSiswa(); // <-- TAMBAHKAN BARIS INI
         }
 
         if (btnLoginText) btnLoginText.innerText = originalText;
@@ -1023,10 +1024,13 @@ async function loadSiswaPBMData() {
   }
 }
 
+// ==========================================
+// KODE PERBAIKAN BUKU KASUS & KARTU KEDISIPLINAN
+// ==========================================
+
 async function loadBukuKasusSiswa() {
   const tbody = document.getElementById("tabel-kasus-body");
   const loading = document.getElementById("loading-kasus");
-  if (!tbody) return;
 
   const userSession = JSON.parse(localStorage.getItem("user_session") || "{}");
   const masterData = JSON.parse(localStorage.getItem("master_data") || "{}");
@@ -1037,45 +1041,104 @@ async function loadBukuKasusSiswa() {
     String(s.nisn) === String(userSession.username)
   );
   
-  if (!currentSiswa || !currentSiswa.nisn) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">NISN tidak ditemukan.</td></tr>';
+  const nisnSiswa = currentSiswa ? currentSiswa.nisn : (userSession.username || userSession.nisn);
+
+  if (!nisnSiswa) {
+    if (tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">NISN tidak ditemukan.</td></tr>';
+    updateWidgetKedisiplinan(0, true);
     return;
   }
 
   if (loading) loading.style.display = "block";
-  tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Memuat data...</td></tr>';
+  if (tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">Memuat data...</td></tr>';
 
   try {
     const response = await fetch(API_URL, {
       method: "POST",
       body: JSON.stringify({
         action: "getBukuKasus",
-        nisn: currentSiswa.nisn
+        nisn: nisnSiswa
       })
     });
 
     const result = await response.json();
     if (loading) loading.style.display = "none";
 
-    if (result.success && result.data && result.data.length > 0) {
-      tbody.innerHTML = "";
-      result.data.forEach(item => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><strong>${item.hari}</strong>, ${item.tanggal}<br><small style="color:#666">${item.waktu}</small></td>
-          <td style="color: #dc3545; font-weight: bold;">${item.kasus}</td>
-          <td>${item.tindak_lanjut}</td>
-          <td>${item.guru_piket}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    } else {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: green; font-weight: bold;">Tidak ada catatan pelanggaran/kasus. 🎉</td></tr>';
+    const dataKasus = (result.success && Array.isArray(result.data)) ? result.data : [];
+    const jumlahKasus = dataKasus.length;
+
+    // 1. UPDATE KARTU KEDISIPLINAN DI BERANDA SISWA
+    updateWidgetKedisiplinan(jumlahKasus);
+
+    // 2. UPDATE TABEL DI TAB PERKEMBANGAN SAYA
+    if (tbody) {
+      if (jumlahKasus > 0) {
+        tbody.innerHTML = "";
+        dataKasus.forEach(item => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><strong>${item.hari || '-'}</strong>, ${item.tanggal || '-'}<br><small style="color:#666">${item.waktu || ''}</small></td>
+            <td style="color: #dc3545; font-weight: bold;">${item.kasus || '-'}</td>
+            <td>${item.tindak_lanjut || '-'}</td>
+            <td>${item.guru_piket || '-'}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: green; font-weight: bold;">Tidak ada catatan pelanggaran/kasus. 🎉</td></tr>';
+      }
     }
   } catch (err) {
     console.error("Gagal memuat buku kasus:", err);
     if (loading) loading.style.display = "none";
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: red;">Gagal terhubung ke server.</td></tr>';
+    if (tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color: red;">Gagal terhubung ke server.</td></tr>';
+    updateWidgetKedisiplinan(0, true);
+  }
+}
+
+// FUNGSI UNTUK MENGUPDATE TAMPILAN KARTU KEDISIPLINAN DI BERANDA
+function updateWidgetKedisiplinan(jumlahKasus, isError = false) {
+  const elStatus = document.getElementById("stat-kedisiplinan-status");
+  const elSubtext = document.getElementById("stat-kedisiplinan-subtext");
+  const elBadgeText = document.getElementById("stat-kedisiplinan-badge-text");
+  const elBadge = document.getElementById("stat-kedisiplinan-badge");
+
+  if (!elStatus) return;
+
+  if (isError) {
+    elStatus.innerText = "N/A";
+    elSubtext.innerText = "Gagal memuat data";
+    if (elBadgeText) elBadgeText.innerText = "Data tidak tersedia";
+    return;
+  }
+
+  if (jumlahKasus === 0) {
+    elStatus.innerText = "Sangat Baik";
+    elStatus.style.color = "#16a34a"; // Warna Hijau
+    elSubtext.innerText = "Pertahankan kedisiplinanmu!";
+    if (elBadgeText) elBadgeText.innerText = "Tidak ada pelanggaran. Hebat! 👍";
+    if (elBadge) {
+      elBadge.style.background = "#f0fdf4";
+      elBadge.style.color = "#15803d";
+    }
+  } else if (jumlahKasus <= 2) {
+    elStatus.innerText = "Perlu Perhatian";
+    elStatus.style.color = "#d97706"; // Warna Oranye
+    elSubtext.innerText = `Terdapat ${jumlahKasus} catatan pelanggaran`;
+    if (elBadgeText) elBadgeText.innerText = `Catatan: ${jumlahKasus} Pelanggaran`;
+    if (elBadge) {
+      elBadge.style.background = "#fffbeb";
+      elBadge.style.color = "#b45309";
+    }
+  } else {
+    elStatus.innerText = "Perhatian Khusus";
+    elStatus.style.color = "#dc2626"; // Warna Merah
+    elSubtext.innerText = `Terdapat ${jumlahKasus} catatan pelanggaran`;
+    if (elBadgeText) elBadgeText.innerText = `Perlu perbaikan sikap! (${jumlahKasus} Kasus)`;
+    if (elBadge) {
+      elBadge.style.background = "#fef2f2";
+      elBadge.style.color = "#b91c1c";
+    }
   }
 }
 

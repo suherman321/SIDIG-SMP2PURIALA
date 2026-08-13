@@ -17,7 +17,7 @@
 
   <!-- FONT AWESOME & CSS EXTERNAL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=5.0">
+  <link rel="stylesheet" href="style.css?v=5.1">
 </head>
 <body>
 
@@ -533,18 +533,18 @@
           </div>
 
           <!-- Card 3: Kedisiplinan -->
-          <div class="stat-box-v2 card-orange">
-            <div class="stat-box-header">
-              <div class="icon-box orange"><i class="fa-solid fa-star"></i></div>
-              <h4>Kedisiplinan</h4>
-            </div>
-            <div class="stat-big-val text-orange" id="stat-kedisiplinan-status">Baik</div>
-            <div class="stat-subtext">Pertahankan kedisiplinanmu!</div>
-            <div class="badge-notice-box orange">
-              <i class="fa-solid fa-award"></i>
-              <span>Tidak ada pelanggaran. Hebat! 👍</span>
-            </div>
-          </div>
+<div class="stat-box-v2 card-orange">
+  <div class="stat-box-header">
+    <div class="icon-box orange"><i class="fa-solid fa-star"></i></div>
+    <h4>Kedisiplinan</h4>
+  </div>
+  <div class="stat-big-val text-orange" id="stat-kedisiplinan-status">Memuat...</div>
+  <div class="stat-subtext" id="stat-kedisiplinan-subtext">Memeriksa catatan...</div>
+  <div class="badge-notice-box orange" id="stat-kedisiplinan-badge">
+    <i class="fa-solid fa-award"></i>
+    <span id="stat-kedisiplinan-badge-text">Memuat data...</span>
+  </div>
+</div>
 
           <!-- Card 4: Level Saya (Gamifikasi) -->
           <div class="stat-box-v2 card-indigo">
@@ -1229,7 +1229,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=50"></script>
+  <script src="app.js?v=51"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {
