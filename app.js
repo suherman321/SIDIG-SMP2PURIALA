@@ -1105,8 +1105,14 @@ function updateWidgetKedisiplinan(jumlahKasus, isError = false) {
 
   if (!elStatus) return;
 
+  // JAGA-JAGA: Jika jumlahKasus dikirim null/undefined, jadikan 0
+  if (jumlahKasus === null || jumlahKasus === undefined) {
+    jumlahKasus = 0;
+  }
+
   if (isError) {
     elStatus.innerText = "N/A";
+    elStatus.style.color = "#6b7280";
     elSubtext.innerText = "Gagal memuat data";
     if (elBadgeText) elBadgeText.innerText = "Data tidak tersedia";
     return;
@@ -1364,14 +1370,10 @@ function updateRangkumanKehadiranSiswa(dataKehadiran) {
 
   // 1. Ambil Elemen dari DOM
   const elPersen = document.getElementById("stat-kehadiran-persen");
-  const elCountHadir = document.getElementById("stat-count-hadir");
-  const elCountAbsen = document.getElementById("stat-count-absen");
   const elBar = document.getElementById("stat-kehadiran-bar");
 
   // 2. Update Nilai
   if (elPersen) elPersen.innerText = persenHadir + "%";
-  if (elCountHadir) elCountHadir.innerText = persenHadir + "%";
-  if (elCountAbsen) elCountAbsen.innerText = persenAbsen + "%";
   if (elBar) elBar.style.width = persenHadir + "%";
 }
 
