@@ -1935,3 +1935,16 @@ div.login-card {
     gap: 16px;
   }
 }
+/* Mengatur grid rekap mapel kehadiran menjadi 3 kolom */
+#grid-kartu-kehadiran-mapel {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 16px !important;
+}
+
+/* Penyesuaian responsif agar tetap nyaman dilihat di HP */
+@media (max-width: 768px) {
+  #grid-kartu-kehadiran-mapel {
+    grid-template-columns: 1fr !important; /* Kembali ke 1 kolom jika dibuka via HP */
+  }
+}
