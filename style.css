@@ -1035,6 +1035,15 @@ td:nth-child(5) {
   border: 2px solid #ffffff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
+/* TAMBAHKAN BLOK KODE INI TEPAT DI BAWAHNYA */
+.user-avatar-circle img#sidebar-siswa-foto,
+.user-avatar-circle img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 50% !important;
+}
 
 .user-name-box .name-text {
   font-size: 13px;
