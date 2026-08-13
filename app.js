@@ -98,9 +98,11 @@ function updateOnlineStatus() {
 }
 
 // ==========================================
-// 4. AUTHENTICATION (LOGIN & LOGOUT)
+// 4. AUTHENTICATION (LOGIN & LOGOUT) - REVISED
 // ==========================================
 async function prosesLogin() {
+  const roleSelect = document.getElementById("login-role");
+  const roleInput = roleSelect ? roleSelect.value : "Siswa";
   const usernameInput = document.getElementById("login-username").value.trim();
   const passwordInput = document.getElementById("login-password").value.trim();
 
@@ -109,11 +111,17 @@ async function prosesLogin() {
     return;
   }
 
+  // Tampilkan indikator loading sederhana pada tombol
+  const btnLoginText = document.getElementById("btn-login-text");
+  const originalText = btnLoginText ? btnLoginText.innerText : "";
+  if (btnLoginText) btnLoginText.innerText = "Memproses...";
+
   try {
     const response = await fetch(API_URL, {
       method: "POST",
       body: JSON.stringify({
         action: "login",
+        role: roleInput,
         username: usernameInput,
         password: passwordInput
       })
@@ -122,6 +130,7 @@ async function prosesLogin() {
     const result = await response.json();
 
     if (result.success) {
+      // 1. Simpan Sesi & Master Data
       localStorage.setItem("user_session", JSON.stringify(result.user));
       const masterObj = {
         list_siswa: result.list_siswa || [],
@@ -130,13 +139,28 @@ async function prosesLogin() {
       };
       localStorage.setItem("master_data", JSON.stringify(masterObj));
 
-      renderMasterData(masterObj.list_siswa, masterObj.list_mapel, masterObj.list_kelas);
-      showAppScreen(result.user);
+      // 2. Berikan jeda 150ms agar localStorage siap sempurna
+      setTimeout(() => {
+        renderMasterData(masterObj.list_siswa, masterObj.list_mapel, masterObj.list_kelas);
+        showAppScreen(result.user);
+
+        // Jika yang login adalah Siswa, ambil data awal
+        if (result.user && (result.user.role === "Siswa" || roleInput === "Siswa")) {
+          switchSiswaTab('beranda');
+          if (typeof loadKehadiranSiswa === "function") loadKehadiranSiswa();
+          if (typeof muatHalamanNilaiSiswa === "function") muatHalamanNilaiSiswa();
+        }
+
+        if (btnLoginText) btnLoginText.innerText = originalText;
+      }, 150);
+
     } else {
-      alert("Login gagal: " + result.message);
+      if (btnLoginText) btnLoginText.innerText = originalText;
+      alert("Login gagal: " + (result.message || "Username atau password salah"));
     }
   } catch (error) {
     console.error("Error login:", error);
+    if (btnLoginText) btnLoginText.innerText = originalText;
     alert("Gagal terhubung ke server. Pastikan koneksi internet stabil.");
   }
 }
