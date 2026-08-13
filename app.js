@@ -1362,16 +1362,16 @@ function updateRangkumanKehadiranSiswa(dataKehadiran) {
   const persenHadir = total > 0 ? Math.round((totalHadir / total) * 100) : 0;
   const persenAbsen = 100 - persenHadir;
 
-  // Ambil elemen UI
+  // 1. Ambil Elemen dari DOM
   const elPersen = document.getElementById("stat-kehadiran-persen");
   const elCountHadir = document.getElementById("stat-count-hadir");
   const elCountAbsen = document.getElementById("stat-count-absen");
-  const elBar = document.getElementById("stat-kehadiran-bar") || document.querySelector(".kehadiran-bar-fill");
+  const elBar = document.getElementById("stat-kehadiran-bar");
 
-  // Update Teks & Bar secara Dinamis
+  // 2. Update Nilai
   if (elPersen) elPersen.innerText = persenHadir + "%";
-  if (elCountHadir) elCountHadir.innerHTML = `Hadir: <b>${persenHadir}%</b>`;
-  if (elCountAbsen) elCountAbsen.innerHTML = `Tidak Hadir: <b>${persenAbsen}%</b>`;
+  if (elCountHadir) elCountHadir.innerText = persenHadir + "%";
+  if (elCountAbsen) elCountAbsen.innerText = persenAbsen + "%";
   if (elBar) elBar.style.width = persenHadir + "%";
 }
 
