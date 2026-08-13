@@ -17,7 +17,7 @@
 
   <!-- FONT AWESOME & CSS EXTERNAL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=5.2">
+  <link rel="stylesheet" href="style.css?v=5.3">
 </head>
 <body>
 
@@ -526,8 +526,8 @@
             <div class="stat-big-val" id="stat-kehadiran-persen">92%</div>
             <div class="stat-trend positive"><i class="fa-solid fa-arrow-up"></i> 2% dari sebelumnya</div>
             <div class="stat-progress-bar">
-              <div class="progress-fill green" style="width: 92%;"></div>
-            </div>
+  <div class="progress-fill green" id="stat-kehadiran-bar" style="width: 92%;"></div>
+</div>
             <div class="stat-split-row">
               <span>Hadir: <strong id="stat-count-hadir">92%</strong></span>
               <span>Tidak Hadir: <strong id="stat-count-absen">8%</strong></span>
@@ -1231,7 +1231,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=52"></script>
+  <script src="app.js?v=53"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {
