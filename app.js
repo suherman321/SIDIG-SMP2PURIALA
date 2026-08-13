@@ -1086,6 +1086,17 @@ function muatHalamanNilaiSiswa() {
   .then(res => {
     if (res.success && Array.isArray(res.data)) {
       rawDataNilaiSiswa = res.data;
+	  // === SISIPKAN KODE INI DI SINI ===
+      const angkaNilai = res.data
+        .map(d => parseFloat(d.nilai))
+        .filter(n => !isNaN(n));
+
+      if (angkaNilai.length > 0) {
+        const avg = (angkaNilai.reduce((a, b) => a + b, 0) / angkaNilai.length).toFixed(1);
+        const elemRata = document.getElementById("stat-nilai-rata");
+        if (elemRata) elemRata.textContent = avg;
+      }
+      // ==================================
       renderKartuMapel(res.data);
     } else {
       gridContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #ef4444;">Gagal memuat data nilai.</div>`;
@@ -2345,7 +2356,11 @@ function toggleSidebarSiswa() {
     sidebar.classList.toggle('collapsed');
   }
 }
-// Fungsi Menghitung Persentase Kehadiran Murni (Pendekatan 1)
+// ==========================================
+// 12. FUNGSI PEMBANTU HERO BANNER & STATS
+// ==========================================
+
+// Fungsi Menghitung Persentase Kehadiran Murni (Pendekatan 1) - Versi Lanjutan
 function updateRangkumanKehadiranSiswa(dataPresensiSiswa) {
   const elemKehadiran = document.getElementById('stat-kehadiran-persen');
   if (!elemKehadiran) return;
@@ -2382,3 +2397,31 @@ function updateRangkumanKehadiranSiswa(dataPresensiSiswa) {
   const persentase = Math.round((totalHadir / totalPertemuan) * 100);
   elemKehadiran.innerText = `${persentase}%`;
 }
+
+// Fungsi untuk mengisi Profil Siswa (Nama & Guru Wali) di Hero Banner
+function muatProfilSiswaHeader() {
+  const userSession = JSON.parse(localStorage.getItem("user_session") || "{}");
+  const masterData = JSON.parse(localStorage.getItem("master_data") || "{}");
+  
+  const listSiswa = masterData.list_siswa || [];
+  const currentSiswa = listSiswa.find(s => 
+    String(s.ref_id) === String(userSession.ref_id) || 
+    String(s.nisn) === String(userSession.username)
+  );
+
+  const namaElem = document.getElementById("siswa-nama-welcome");
+  const waliElem = document.getElementById("siswa-guruwali-welcome");
+
+  if (namaElem) {
+    namaElem.textContent = userSession.nama || (currentSiswa ? currentSiswa.nama_siswa : "Siswa");
+  }
+
+  if (waliElem) {
+    waliElem.textContent = currentSiswa ? (currentSiswa.guru_wali || "-") : "-";
+  }
+}
+
+// Inisialisasi otomatis saat dokumen siap
+document.addEventListener("DOMContentLoaded", () => {
+  muatProfilSiswaHeader();
+});
