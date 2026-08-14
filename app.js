@@ -295,8 +295,14 @@ function renderMasterData(listSiswa, listMapel, listKelas) {
   const role = String(userSession.role || "").toUpperCase();
   // 🔴 SISIPKAN KODE TAMBAHAN FOTO GURU DI SINI 🔴
   if (role === "GURU") {
-    const masterData = JSON.parse(localStorage.getItem("master_data") || "{}");
-    const listGuru = masterData.list_guru || masterGuruGlobal || [];
+    let listGuru = [];
+    try {
+      const masterData = JSON.parse(localStorage.getItem("master_data") || "{}");
+      listGuru = masterData.list_guru || masterData.guru || [];
+    } catch (e) {
+      listGuru = [];
+    }
+
     const userRefId = String(userSession.ref_id || userSession.username || userSession.email || "").trim().toLowerCase();
 
     const currentGuru = listGuru.find(g => 
