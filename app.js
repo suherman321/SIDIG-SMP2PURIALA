@@ -663,7 +663,7 @@ async function tampilkanRiwayatNilai() {
           action: "getNilai",
           role: role,
           ref_id_guru: role === "ADMIN" ? "" : userRefId,
-          ref_id_siswa: role === "SISWA" ? (currentSiswa ? currentSiswa.ref_id : userRefId) : ""
+          ref_id_siswa: currentSiswa ? currentSiswa.ref_id : userRefId
         })
       });
       const result = await response.json();
@@ -673,7 +673,7 @@ async function tampilkanRiwayatNilai() {
     } catch (err) {
       console.error("Gagal mengambil data nilai dari server:", err);
     }
-  } // 👈 Kurung tutup try-catch di sini
+  }
 
   // B. Ambil Offline dari IndexedDB (jika server kosong / offline)
   if (listNilai.length === 0 && typeof openDB === "function") {
@@ -701,20 +701,16 @@ async function tampilkanRiwayatNilai() {
     }
   }
 
-  // C. Update Statistik Angka Total Nilai
   if (role !== "SISWA") {
     const statTotalNilai = document.getElementById("stat-total-nilai");
     if (statTotalNilai) {
-      const totalData = Array.isArray(listNilai) ? listNilai.length : 0;
-      statTotalNilai.innerText = totalData; // Sekarang baris ini dipastikan berjalan!
-    }
+      // 🛡️ Pastikan listNilai berupa array dan hitung nilainya
+    const totalData = Array.isArray(listNilai) ? listNilai.length : 0;
+    
+    // Tampilkan jumlahnya ke HTML
+    statTotalNilai.innerText = totalData;
   }
-
-  // D. Render Tabel Nilai Ke HTML
-  if (typeof renderTabelNilai === "function") {
-    renderTabelNilai(listNilai);
-  }
-} // 👈 Kurung tutup fungsi baru ditaruh di paling akhir!
+}
 
   // C. HIT UTAMA MATRIKS: Panggil Render Matriks untuk Kelas Aktif
   if (role !== "SISWA" && kelasAktif) {
