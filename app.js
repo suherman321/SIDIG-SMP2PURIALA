@@ -706,10 +706,9 @@ async function tampilkanRiwayatNilai() {
 
   // 2. Update Kartu Dashboard
   if (role !== "SISWA") {
-    const statTotalNilai = document.getElementById("stat-total-nilai");
-    if (statTotalNilai) {
-      statTotalNilai.innerText = totalNilaiGuruSemuaKelas;
-    }
+    document.querySelectorAll("#stat-total-nilai").forEach(el => {
+      el.innerText = totalNilaiGuruSemuaKelas;
+    });
   }
 
   // 3. Matriks Nilai (jika ada kelas aktif)
