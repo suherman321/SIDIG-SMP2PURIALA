@@ -293,36 +293,20 @@ function renderMasterData(listSiswa, listMapel, listKelas) {
 
   const userSession = JSON.parse(localStorage.getItem("user_session") || "{}");
   const role = String(userSession.role || "").toUpperCase();
-  // 🔴 SISIPKAN KODE TAMBAHAN FOTO GURU DI SINI 🔴
+
+ // --- TAMPILKAN FOTO GURU PADA BANNER WELCOME ---
   if (role === "GURU") {
-    let listGuru = [];
-    try {
-      const masterData = JSON.parse(localStorage.getItem("master_data") || "{}");
-      listGuru = masterData.list_guru || masterData.guru || [];
-    } catch (e) {
-      listGuru = [];
-    }
+    const urlFoto = userSession.foto;
 
-    // Ambil ref_id user yang sedang login (misal: "12")
-    const userRefId = String(userSession.ref_id || userSession.id || "").trim();
-
-    // Mencocokkan ref_id akun login dengan ref_id di tabel Sheet Guru
-    const currentGuru = listGuru.find(g => String(g.ref_id || "").trim() === userRefId);
-
-    if (currentGuru) {
-      // Mengambil URL dari kolom Foto / foto
-      const urlFoto = currentGuru.Foto || currentGuru.foto || currentGuru.url_foto;
-
-      const imgBanner = document.getElementById("img-profil-banner");
-      if (imgBanner && urlFoto) {
-        imgBanner.src = urlFoto;
-        imgBanner.style.width = "85px";
-        imgBanner.style.height = "85px";
-        imgBanner.style.objectFit = "cover";
-        imgBanner.style.borderRadius = "50%";
-        imgBanner.style.border = "3px solid #ffffff";
-        imgBanner.style.boxShadow = "0 4px 10px rgba(0,0,0,0.15)";
-      }
+    const imgBanner = document.getElementById("img-profil-banner");
+    if (imgBanner && urlFoto) {
+      imgBanner.src = urlFoto;
+      imgBanner.style.width = "85px";
+      imgBanner.style.height = "85px";
+      imgBanner.style.objectFit = "cover";
+      imgBanner.style.borderRadius = "50%";
+      imgBanner.style.border = "3px solid #ffffff";
+      imgBanner.style.boxShadow = "0 4px 10px rgba(0,0,0,0.15)";
     }
   }
 
