@@ -301,12 +301,13 @@ function renderMasterData(listSiswa, listMapel, listKelas) {
     const imgBanner = document.getElementById("img-profil-banner");
     if (imgBanner && urlFoto) {
       imgBanner.src = urlFoto;
-      imgBanner.style.width = "85px";
-      imgBanner.style.height = "85px";
+// Ukuran diperbesar agar pas dengan kotak kanan
+      imgBanner.style.width = "120px";
+      imgBanner.style.height = "120px";
       imgBanner.style.objectFit = "cover";
       imgBanner.style.borderRadius = "50%";
-      imgBanner.style.border = "3px solid #ffffff";
-      imgBanner.style.boxShadow = "0 4px 10px rgba(0,0,0,0.15)";
+      imgBanner.style.border = "4px solid #ffffff";
+      imgBanner.style.boxShadow = "0 6px 16px rgba(0, 0, 0, 0.15)";
     }
   }
 
