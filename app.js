@@ -663,17 +663,18 @@ async function tampilkanRiwayatNilai() {
           action: "getNilai",
           role: role,
           ref_id_guru: role === "ADMIN" ? "" : userRefId,
-          ref_id_siswa: currentSiswa ? currentSiswa.ref_id : userRefId
-        })
-      });
-      const result = await response.json();
-      if (result.success && Array.isArray(result.data)) {
-        listNilai = result.data.map(item => ({ ...item, synced: true }));
-      }
-    } catch (err) {
-      console.error("Gagal mengambil data nilai dari server:", err);
+          // 🛠️ PERBAIKAN: Hanya kirim ref_id_siswa jika role adalah SISWA
+        ref_id_siswa: role === "SISWA" ? (currentSiswa ? currentSiswa.ref_id : userRefId) : ""
+      })
+    });
+    const result = await response.json();
+    if (result.success && Array.isArray(result.data)) {
+      listNilai = result.data.map(item => ({ ...item, synced: true }));
     }
+  } catch (err) {
+    console.error("Gagal mengambil data nilai dari server:", err);
   }
+}
 
   // B. Ambil Offline dari IndexedDB (jika server kosong / offline)
   if (listNilai.length === 0 && typeof openDB === "function") {
