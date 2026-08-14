@@ -701,30 +701,31 @@ async function tampilkanRiwayatNilai() {
     }
   }
 
+// 1. Simpan dulu total nilai guru untuk SEMUA kelas
+  const totalNilaiGuruSemuaKelas = Array.isArray(listNilai) ? listNilai.length : 0;
+
+  // 2. Update Kartu Dashboard
   if (role !== "SISWA") {
     const statTotalNilai = document.getElementById("stat-total-nilai");
     if (statTotalNilai) {
-      // 🛡️ Pastikan listNilai berupa array dan hitung nilainya
-    const totalData = Array.isArray(listNilai) ? listNilai.length : 0;
-    
-    // Tampilkan jumlahnya ke HTML
-    statTotalNilai.innerText = totalData;
+      statTotalNilai.innerText = totalNilaiGuruSemuaKelas;
+    }
   }
-}
 
-  // C. HIT UTAMA MATRIKS: Panggil Render Matriks untuk Kelas Aktif
-  if (role !== "SISWA" && kelasAktif) {
+  // 3. Matriks Nilai (jika ada kelas aktif)
+  if (role !== "SISWA" && typeof kelasAktif !== 'undefined' && kelasAktif) {
     const siswaKelasIni = listSiswaMaster.filter(s => String(s.kelas).trim().toUpperCase() === String(kelasAktif).trim().toUpperCase());
     renderRiwayatNilaiMatriks(listNilai, siswaKelasIni, kelasAktif);
   }
 
-  // Filter listNilai tabel transaksi umum jika ada kelas aktif
-  if (role !== "SISWA" && kelasAktif) {
+  // 4. Filter tabel riwayat HANYA jika kelas diklik
+  if (role !== "SISWA" && typeof kelasAktif !== 'undefined' && kelasAktif) {
     listNilai = listNilai.filter(item => String(item.kelas || "").trim().toUpperCase() === String(kelasAktif).trim().toUpperCase());
   }
 
   if (!tbody) return;
 
+  // 5. Cek jika data kosong setelah difilter
   if (!listNilai || listNilai.length === 0) {
     tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 15px; color: #94a3b8;">Belum ada data nilai terinput</td></tr>';
     return;
