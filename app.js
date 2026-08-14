@@ -293,6 +293,27 @@ function renderMasterData(listSiswa, listMapel, listKelas) {
 
   const userSession = JSON.parse(localStorage.getItem("user_session") || "{}");
   const role = String(userSession.role || "").toUpperCase();
+  // 🔴 SISIPKAN KODE TAMBAHAN FOTO GURU DI SINI 🔴
+  if (role === "GURU") {
+    const masterData = JSON.parse(localStorage.getItem("master_data") || "{}");
+    const listGuru = masterData.list_guru || masterGuruGlobal || [];
+    const userRefId = String(userSession.ref_id || userSession.username || userSession.email || "").trim().toLowerCase();
+
+    const currentGuru = listGuru.find(g => 
+      String(g.ref_id || "").trim().toLowerCase() === userRefId || 
+      String(g.username || "").trim().toLowerCase() === userRefId ||
+      String(g.email || "").trim().toLowerCase() === userRefId
+    );
+
+    const imgBanner = document.getElementById("img-profil-banner");
+    if (imgBanner && currentGuru && (currentGuru.foto || currentGuru.url_foto)) {
+      imgBanner.src = currentGuru.foto || currentGuru.url_foto;
+      imgBanner.style.width = "80px";
+      imgBanner.style.height = "80px";
+      imgBanner.style.objectFit = "cover";
+      imgBanner.style.borderRadius = "50%";
+    }
+  }
 
   // 1. Render Kartu Pilih Kelas
   const container = document.getElementById("container-kelas");
