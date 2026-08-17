@@ -17,7 +17,7 @@
 
   <!-- FONT AWESOME & CSS EXTERNAL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=6.7">
+  <link rel="stylesheet" href="style.css?v=6.8">
 </head>
 <body>
 
@@ -731,26 +731,25 @@
         </div>
       </div>
 
-      <!-- TAB 5: PBM (ID & KODE LAMA DIPELIHARA SEPENUHNYA) -->
-      <div id="tab-siswa-pbm" class="tab-siswa-content hidden">
-        <div class="siswa-card-box">
-          <h2 class="sub-page-title">Presensi Mata Pelajaran (PBM)</h2>
-          <table class="data-table-siswa">
-            <thead>
-              <tr>
-                <th>Tanggal</th>
-                <th>Mata Pelajaran</th>
-                <th>Guru</th>
-                <th>Permasalahan</th>
-                <th>Penyelesaian</th>
-              </tr>
-            </thead>
-            <tbody id="tbl-siswa-pbm-body"></tbody>
-          </table>
-        </div>
+      <!-- TAB 5: PBM -->
+<div id="tab-siswa-pbm" class="tab-siswa-content hidden">
+  <div class="siswa-card-box">
+    <h2 class="sub-page-title">Pembelajaran (PBM)</h2>
+    <div id="pbm-mapel-view">
+      <div id="pbm-mapel-cards" class="pbm-mapel-grid"></div>
+    </div>
+    <div id="pbm-detail-view" class="hidden">
+      <div class="pbm-detail-header">
+        <button type="button" class="pbm-btn-back" onclick="kembaliKeMapelPBM()"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+        <h3 id="pbm-detail-title">-</h3>
       </div>
-
-    </main>
+      <div class="pbm-detail-table-wrap">
+        <table class="data-table-siswa">
+          <thead><tr><th>Tanggal</th><th>Guru</th><th>Permasalahan</th><th>Penyelesaian</th></tr></thead>
+          <tbody id="tbl-siswa-pbm-body"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1215,7 +1214,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=67"></script>
+  <script src="app.js?v=68"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {

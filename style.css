@@ -1948,3 +1948,24 @@ div.login-card {
     grid-template-columns: 1fr !important; /* Kembali ke 1 kolom jika dibuka via HP */
   }
 }
+/* CARD MAPEL PBM SISWA */
+.pbm-mapel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px}
+.pbm-mapel-card{position:relative;background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;min-height:145px;cursor:pointer;transition:all .2s ease;box-shadow:0 2px 6px rgba(0,0,0,.02);display:flex;flex-direction:column}
+.pbm-mapel-card:hover{transform:translateY(-3px);border-color:#bfdbfe;box-shadow:0 8px 18px rgba(37,99,235,.08)}
+.pbm-mapel-icon{width:42px;height:42px;border-radius:10px;background:#eff6ff;color:#2563eb;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+.pbm-mapel-info{padding-right:28px}
+.pbm-mapel-info h3{margin:0 0 8px;font-size:14px;font-weight:700;color:#1e293b;line-height:1.4}
+.pbm-mapel-info span{font-size:11px;color:#64748b;font-weight:600}
+.pbm-mapel-arrow{position:absolute;right:16px;bottom:16px;color:#94a3b8;font-size:12px}
+.pbm-mapel-card:hover .pbm-mapel-arrow{color:#2563eb}
+.pbm-loading-message,.pbm-empty-message{grid-column:1/-1;text-align:center;color:#64748b;padding:30px 15px}
+.pbm-empty-message{display:flex;flex-direction:column;align-items:center;gap:8px}
+.pbm-empty-message i{font-size:25px;color:#94a3b8}
+.pbm-empty-message.error{color:#dc2626}
+.pbm-empty-message.error i{color:#dc2626}
+.pbm-detail-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.pbm-btn-back{background:#f1f5f9;border:1px solid #e2e8f0;color:#475569;padding:7px 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
+.pbm-btn-back:hover{background:#e2e8f0}
+.pbm-detail-header h3{margin:0;font-size:16px;color:#1e293b}
+.pbm-detail-table-wrap{width:100%;overflow-x:auto}
+@media(max-width:768px){.pbm-mapel-grid{grid-template-columns:1fr}.pbm-mapel-card{min-height:135px}}

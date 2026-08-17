@@ -997,52 +997,67 @@ function tutupMenuSiswa() {
 }
 
 async function loadSiswaPBMData() {
-  const tbody = document.getElementById("tbl-siswa-pbm-body");
-  if (!tbody) return;
-
+  const cardsContainer = document.getElementById("pbm-mapel-cards");
+  const mapelView = document.getElementById("pbm-mapel-view");
+  const detailView = document.getElementById("pbm-detail-view");
+  if (!cardsContainer) return;
   const userSession = JSON.parse(localStorage.getItem("user_session") || "{}");
   const nisnSiswa = userSession.username || userSession.nisn || userSession.ref_id_siswa;
-
   if (!nisnSiswa) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Gagal mengidentifikasi data siswa. Silakan login ulang.</td></tr>';
+    cardsContainer.innerHTML = '<div class="pbm-empty-message">Gagal mengidentifikasi data siswa. Silakan login ulang.</div>';
     return;
   }
-
-  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Memuat data...</td></tr>';
-
+  if (mapelView) mapelView.classList.remove("hidden");
+  if (detailView) detailView.classList.add("hidden");
+  cardsContainer.innerHTML = '<div class="pbm-loading-message"><i class="fa-solid fa-spinner fa-spin"></i> Memuat data PBM...</div>';
   try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({
-        action: "getPBM",
-        ref_id_siswa: nisnSiswa
-      })
-    });
-
+    const response = await fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({action:"getPBM",ref_id_siswa:nisnSiswa})});
     const result = await response.json();
-
-    if (result.success && result.data && result.data.length > 0) {
-      let html = '';
+    if (result.success && Array.isArray(result.data) && result.data.length > 0) {
+      window.dataPBMSiswa = result.data;
+      const kelompokMapel = {};
       result.data.forEach(item => {
-        html += `
-          <tr>
-            <td>${item.tanggal || '-'}</td>
-            <td><b>${item.mapel || '-'}</b></td>
-            <td>${item.guru || '-'}</td>
-            <td>${item.permasalahan || '-'}</td>
-            <td>${item.penyelesaian || '-'}</td>
-          </tr>
-        `;
+        const mapel = (item.mapel || "Tanpa Mata Pelajaran").trim();
+        if (!kelompokMapel[mapel]) kelompokMapel[mapel] = [];
+        kelompokMapel[mapel].push(item);
       });
-      tbody.innerHTML = html;
+      cardsContainer.innerHTML = Object.keys(kelompokMapel).map(mapel => {
+        const jumlah = kelompokMapel[mapel].length;
+        return `<div class="pbm-mapel-card" onclick="tampilkanDetailPBM('${encodeURIComponent(mapel)}')"><div class="pbm-mapel-icon"><i class="fa-solid fa-book-open"></i></div><div class="pbm-mapel-info"><h3>${mapel}</h3><span>${jumlah} Catatan</span></div><div class="pbm-mapel-arrow"><i class="fa-solid fa-chevron-right"></i></div></div>`;
+      }).join("");
     } else {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#64748b;">Tidak ada catatan PBM untuk Anda.</td></tr>';
+      window.dataPBMSiswa = [];
+      cardsContainer.innerHTML = '<div class="pbm-empty-message"><i class="fa-solid fa-book-open"></i><span>Tidak ada catatan PBM untuk Anda.</span></div>';
     }
   } catch (err) {
-    console.error("Gagal memuat PBM siswa:", err);
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Gagal terhubung ke server.</td></tr>';
+    console.error("Gagal memuat PBM siswa:",err);
+    cardsContainer.innerHTML = '<div class="pbm-empty-message error"><i class="fa-solid fa-triangle-exclamation"></i><span>Gagal terhubung ke server.</span></div>';
   }
+}
+
+function tampilkanDetailPBM(mapelEncoded) {
+  const mapel = decodeURIComponent(mapelEncoded);
+  const data = Array.isArray(window.dataPBMSiswa) ? window.dataPBMSiswa.filter(item => (item.mapel || "Tanpa Mata Pelajaran").trim() === mapel) : [];
+  const mapelView = document.getElementById("pbm-mapel-view");
+  const detailView = document.getElementById("pbm-detail-view");
+  const detailTitle = document.getElementById("pbm-detail-title");
+  const tbody = document.getElementById("tbl-siswa-pbm-body");
+  if (!mapelView || !detailView || !detailTitle || !tbody) return;
+  mapelView.classList.add("hidden");
+  detailView.classList.remove("hidden");
+  detailTitle.textContent = mapel;
+  if (data.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#64748b;">Tidak ada data PBM.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.map(item => `<tr><td>${item.tanggal || "-"}</td><td><b>${item.guru || "-"}</b></td><td>${item.permasalahan || "-"}</td><td>${item.penyelesaian || "-"}</td></tr>`).join("");
+}
+
+function kembaliKeMapelPBM() {
+  const mapelView = document.getElementById("pbm-mapel-view");
+  const detailView = document.getElementById("pbm-detail-view");
+  if (mapelView) mapelView.classList.remove("hidden");
+  if (detailView) detailView.classList.add("hidden");
 }
 
 // ==========================================
