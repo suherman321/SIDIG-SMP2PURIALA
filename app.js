@@ -1003,20 +1003,23 @@ function tutupMenuSiswa() {
 }
 function loadSiswaProfilData() {
   const userSession = JSON.parse(localStorage.getItem("user_session") || "{}");
-  const userRefId = String(userSession.ref_id || userSession.username || userSession.nis || "").trim();
+  const nisnSiswa = userSession.username || userSession.nisn || userSession.ref_id_siswa;
+  if (!nisnSiswa) {
+    console.warn("Identitas siswa tidak ditemukan.");
+    return;
+  }
   const dataSiswa = (window.masterSiswaGlobal || []).find(s =>
-    String(s.ref_id) === userRefId ||
-    String(s.username) === userRefId ||
-    String(s.nisn) === userRefId
+    String(s.nisn || "").trim() === String(nisnSiswa).trim() ||
+    String(s.ref_id || "").trim() === String(nisnSiswa).trim()
   );
   if (!dataSiswa) {
-    console.warn("Data siswa untuk profil tidak ditemukan.");
+    console.warn("Data siswa tidak ditemukan untuk:", nisnSiswa);
     return;
   }
   const nama = dataSiswa.nama_siswa || "-";
   const kelas = dataSiswa.kelas || "-";
   const nisn = dataSiswa.nisn || "-";
-  const guruWali = dataSiswa.guru_wali || "-";
+  const guruWali = dataSiswa.guru_wali || dataSiswa.Guru_Wali || "-";
   const foto = String(dataSiswa.foto || "").trim();
   const elNama = document.getElementById("profil-siswa-nama");
   const elKelas = document.getElementById("profil-siswa-kelas");
@@ -1026,12 +1029,12 @@ function loadSiswaProfilData() {
   const elDataGuruWali = document.getElementById("profil-data-guruwali");
   const elFoto = document.getElementById("profil-siswa-foto");
   const elIcon = document.getElementById("profil-siswa-icon");
-  if (elNama) elNama.innerText = nama;
-  if (elKelas) elKelas.innerText = "Kelas " + kelas;
-  if (elDataNama) elDataNama.innerText = nama;
-  if (elDataNisn) elDataNisn.innerText = nisn;
-  if (elDataKelas) elDataKelas.innerText = kelas;
-  if (elDataGuruWali) elDataGuruWali.innerText = guruWali;
+  if (elNama) elNama.textContent = nama;
+  if (elKelas) elKelas.textContent = "Kelas " + kelas;
+  if (elDataNama) elDataNama.textContent = nama;
+  if (elDataNisn) elDataNisn.textContent = nisn;
+  if (elDataKelas) elDataKelas.textContent = kelas;
+  if (elDataGuruWali) elDataGuruWali.textContent = guruWali;
   if (foto) {
     if (elFoto) {
       elFoto.src = foto;
