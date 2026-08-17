@@ -17,7 +17,7 @@
 
   <!-- FONT AWESOME & CSS EXTERNAL -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=6.8">
+  <link rel="stylesheet" href="style.css?v=6.9">
 </head>
 <body>
 
@@ -752,6 +752,39 @@
     </div>
   </div>
 </div>
+<!-- TAB 6: PROFIL SISWA -->
+<div id="tab-siswa-profil" class="tab-siswa-content hidden">
+  <div class="siswa-card-box">
+    <h2 class="sub-page-title">Profil Saya</h2>
+    <div class="profil-siswa-header">
+      <div class="profil-siswa-photo">
+        <img id="profil-siswa-foto" src="" alt="Foto Siswa">
+        <div id="profil-siswa-icon"><i class="fa-solid fa-user-graduate"></i></div>
+      </div>
+      <div class="profil-siswa-identitas">
+        <h2 id="profil-siswa-nama">-</h2>
+        <p id="profil-siswa-kelas">Kelas -</p>
+        <p><i class="fa-solid fa-school"></i> SMP Negeri 2 Puriala</p>
+      </div>
+    </div>
+    <div class="profil-siswa-section">
+      <h3><i class="fa-solid fa-id-card"></i> Data Siswa</h3>
+      <div class="profil-siswa-data-grid">
+        <div class="profil-siswa-data-item"><span>Nama Lengkap</span><strong id="profil-data-nama">-</strong></div>
+        <div class="profil-siswa-data-item"><span>NISN</span><strong id="profil-data-nisn">-</strong></div>
+        <div class="profil-siswa-data-item"><span>Kelas</span><strong id="profil-data-kelas">-</strong></div>
+        <div class="profil-siswa-data-item"><span>Guru Wali</span><strong id="profil-data-guruwali">-</strong></div>
+      </div>
+    </div>
+    <div class="profil-siswa-section">
+      <h3><i class="fa-solid fa-school"></i> Informasi Sekolah</h3>
+      <div class="profil-siswa-data-grid">
+        <div class="profil-siswa-data-item"><span>Sekolah</span><strong>SMP Negeri 2 Puriala</strong></div>
+        <div class="profil-siswa-data-item"><span>Status</span><strong>Siswa Aktif</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <!-- B. DASHBOARD GURU -->
@@ -1214,7 +1247,7 @@
   </div>
 </div>
 
-  <script src="app.js?v=68"></script>
+  <script src="app.js?v=69"></script>
 <!-- Registrasi Service Worker untuk PWA -->
     <script>
       if ('serviceWorker' in navigator) {

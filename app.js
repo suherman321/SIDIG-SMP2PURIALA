@@ -927,6 +927,7 @@ function switchSiswaTab(tabName) {
   const tabKasus = document.getElementById("tab-siswa-kasus");
   const tabKehadiran = document.getElementById("tab-siswa-kehadiran");
   const tabPbm = document.getElementById("tab-siswa-pbm");
+  const tabProfil = document.getElementById("tab-siswa-profil");
 
   // 3. Sembunyikan semua tab terlebih dahulu
   if (tabBeranda) tabBeranda.classList.add("hidden");
@@ -934,6 +935,7 @@ function switchSiswaTab(tabName) {
   if (tabKasus) tabKasus.classList.add("hidden");
   if (tabKehadiran) tabKehadiran.classList.add("hidden");
   if (tabPbm) tabPbm.classList.add("hidden");
+  if (tabProfil) tabProfil.classList.add("hidden");
 
   // 4. Sembunyikan tombol 'Kembali' lama (jika ada)
   const btnBackNilai = document.getElementById("btn-back-siswa-nilai");
@@ -959,6 +961,10 @@ function switchSiswaTab(tabName) {
     if (tabPbm) tabPbm.classList.remove("hidden");
     if (typeof loadSiswaPBMData === "function") loadSiswaPBMData();
   }
+  else if (tabName === 'profil') {
+  if (tabProfil) tabProfil.classList.remove("hidden");
+  if (typeof loadSiswaProfilData === "function") loadSiswaProfilData();
+}
 
   // 6. Update highlight tombol aktif di sidebar kiri
   const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
@@ -994,6 +1000,48 @@ function tutupMenuSiswa() {
 
   const dashboard = document.getElementById("siswa-dashboard");
   if (dashboard) dashboard.classList.remove("hidden");
+}
+function loadSiswaProfilData() {
+  const userSession = JSON.parse(localStorage.getItem("user_session") || "{}");
+  const userRefId = String(userSession.ref_id || userSession.username || userSession.nis || "").trim();
+  const dataSiswa = (window.masterSiswaGlobal || []).find(s =>
+    String(s.ref_id) === userRefId ||
+    String(s.username) === userRefId ||
+    String(s.nisn) === userRefId
+  );
+  if (!dataSiswa) {
+    console.warn("Data siswa untuk profil tidak ditemukan.");
+    return;
+  }
+  const nama = dataSiswa.nama_siswa || "-";
+  const kelas = dataSiswa.kelas || "-";
+  const nisn = dataSiswa.nisn || "-";
+  const guruWali = dataSiswa.guru_wali || "-";
+  const foto = String(dataSiswa.foto || "").trim();
+  const elNama = document.getElementById("profil-siswa-nama");
+  const elKelas = document.getElementById("profil-siswa-kelas");
+  const elDataNama = document.getElementById("profil-data-nama");
+  const elDataNisn = document.getElementById("profil-data-nisn");
+  const elDataKelas = document.getElementById("profil-data-kelas");
+  const elDataGuruWali = document.getElementById("profil-data-guruwali");
+  const elFoto = document.getElementById("profil-siswa-foto");
+  const elIcon = document.getElementById("profil-siswa-icon");
+  if (elNama) elNama.innerText = nama;
+  if (elKelas) elKelas.innerText = "Kelas " + kelas;
+  if (elDataNama) elDataNama.innerText = nama;
+  if (elDataNisn) elDataNisn.innerText = nisn;
+  if (elDataKelas) elDataKelas.innerText = kelas;
+  if (elDataGuruWali) elDataGuruWali.innerText = guruWali;
+  if (foto) {
+    if (elFoto) {
+      elFoto.src = foto;
+      elFoto.style.display = "block";
+    }
+    if (elIcon) elIcon.style.display = "none";
+  } else {
+    if (elFoto) elFoto.style.display = "none";
+    if (elIcon) elIcon.style.display = "block";
+  }
 }
 
 async function loadSiswaPBMData() {
