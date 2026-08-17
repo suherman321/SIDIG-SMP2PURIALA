@@ -1003,23 +1003,20 @@ function tutupMenuSiswa() {
 }
 function loadSiswaProfilData() {
   const userSession = JSON.parse(localStorage.getItem("user_session") || "{}");
-  const nisnSiswa = userSession.username || userSession.nisn || userSession.ref_id_siswa;
-  if (!nisnSiswa) {
-    console.warn("Identitas siswa tidak ditemukan.");
-    return;
-  }
-  const dataSiswa = (window.masterSiswaGlobal || []).find(s =>
-    String(s.nisn || "").trim() === String(nisnSiswa).trim() ||
-    String(s.ref_id || "").trim() === String(nisnSiswa).trim()
+  const userRefId = String(userSession.ref_id || userSession.username || userSession.nis || "").trim();
+  const dataSiswa = masterSiswaGlobal.find(s =>
+    String(s.ref_id) === String(userSession.ref_id) ||
+    String(s.nisn) === String(userSession.username) ||
+    String(s.ref_id) === String(userSession.username)
   );
   if (!dataSiswa) {
-    console.warn("Data siswa tidak ditemukan untuk:", nisnSiswa);
+    console.warn("Data siswa tidak ditemukan untuk:", userRefId);
     return;
   }
   const nama = dataSiswa.nama_siswa || "-";
   const kelas = dataSiswa.kelas || "-";
   const nisn = dataSiswa.nisn || "-";
-  const guruWali = dataSiswa.guru_wali || dataSiswa.Guru_Wali || "-";
+  const guruWali = dataSiswa.guru_wali || "-";
   const foto = String(dataSiswa.foto || "").trim();
   const elNama = document.getElementById("profil-siswa-nama");
   const elKelas = document.getElementById("profil-siswa-kelas");
