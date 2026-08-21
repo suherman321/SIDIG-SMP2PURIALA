@@ -1981,3 +1981,25 @@ div.login-card {
   object-fit: cover;
   display: block;
 }
+/* ==========================================
+   FIX TAMPILAN DASHBOARD GURU / ADMIN / SISWA
+   Tambahkan paling bawah style.css
+========================================== */
+
+#section-app.app-card{
+  width:100%;
+  max-width:100%;
+  min-height:100vh;
+  margin:0;
+  padding:0;
+  background:transparent;
+  border-radius:0;
+  box-shadow:none;
+}
+
+#guru-dashboard,
+#admin-dashboard,
+#siswa-dashboard{
+  width:100%;
+  min-height:100vh;
+}
