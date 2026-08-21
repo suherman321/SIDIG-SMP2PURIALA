@@ -1981,11 +1981,3 @@ div.login-card {
   object-fit: cover;
   display: block;
 }
-#guru-dashboard > div {
-  display: block !important;
-}
-
-#guru-dashboard {
-  background: #f8fafc;
-  color: #1e293b;
-}
