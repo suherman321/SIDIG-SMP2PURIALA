@@ -768,17 +768,13 @@ td:nth-child(5) {
   margin-left: auto;
 }
 
-#admin-dashboard ~ .kelas-binaan-section,
-#admin-dashboard ~ .riwayat-nilai-section,
-#admin-dashboard #pilih-kelas-binaan,
-#admin-dashboard #riwayat-nilai-terinput,
-#admin-dashboard .kelas-binaan-container,
-#admin-dashboard .riwayat-nilai-container {
-  display: none !important;
+/* PENDEKATAN SECARA UMUM & AMAN FOR TAB SWITCHING */
+.admin-tab-content {
+  display: none;
 }
 
-#admin-dashboard > div:not(#admin-view-nilai):not(#admin-view-absen):not(#admin-view-kasus):not(#admin-view-user):not(.admin-tab-nav):not(.welcome-card-guru):not(.guru-stats-grid):not(.admin-layout-wrapper) {
-  display: none !important;
+.admin-tab-content.active {
+  display: block;
 }
 
 /* ==========================================================================
