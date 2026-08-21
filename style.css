@@ -192,12 +192,18 @@ select.custom-input:focus, input.custom-input:focus {
 .app-card {
   background: #ffffff;
   color: #333333;
-  padding: 20px;
-  border-radius: 12px;
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;   /* sebelumnya 900px */
+  min-height: 90vh;
+  margin: auto;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
-.hidden { display: none !important; }
+
+.hidden {
+  display: none !important;
+}
 
 /* CSS STYLE ADMIN NAV TABS */
 .admin-tab-nav {
@@ -1980,26 +1986,4 @@ div.login-card {
   height: 100%;
   object-fit: cover;
   display: block;
-}
-/* ==========================================
-   FIX TAMPILAN DASHBOARD GURU / ADMIN / SISWA
-   Tambahkan paling bawah style.css
-========================================== */
-
-#section-app.app-card{
-  width:100%;
-  max-width:100%;
-  min-height:100vh;
-  margin:0;
-  padding:0;
-  background:transparent;
-  border-radius:0;
-  box-shadow:none;
-}
-
-#guru-dashboard,
-#admin-dashboard,
-#siswa-dashboard{
-  width:100%;
-  min-height:100vh;
 }
