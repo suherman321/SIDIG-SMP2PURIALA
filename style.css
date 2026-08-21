@@ -192,18 +192,12 @@ select.custom-input:focus, input.custom-input:focus {
 .app-card {
   background: #ffffff;
   color: #333333;
-  width: 100%;
-  max-width: 1200px;   /* sebelumnya 900px */
-  min-height: 90vh;
-  margin: auto;
   padding: 20px;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 900px;
 }
-
-.hidden {
-  display: none !important;
-}
+.hidden { display: none !important; }
 
 /* CSS STYLE ADMIN NAV TABS */
 .admin-tab-nav {
